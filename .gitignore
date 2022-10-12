@@ -48,13 +48,3 @@ buildNumber.properties
 
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
-
-#################
-## Logger Files
-#################
-/familyhelper-plugin-notify/logs/
-
-#################
-## Configuration Files
-#################
-/familyhelper-plugin-notify/conf/

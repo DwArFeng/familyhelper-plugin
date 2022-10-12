@@ -48,6 +48,11 @@
             <groupId>com.dwarfeng</groupId>
             <artifactId>notify-impl</artifactId>
         </dependency>
+        <!-- rbac组件 -->
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>rbac-distributed-service-stack</artifactId>
+        </dependency>
         <!-- familyhelper-clannad组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
