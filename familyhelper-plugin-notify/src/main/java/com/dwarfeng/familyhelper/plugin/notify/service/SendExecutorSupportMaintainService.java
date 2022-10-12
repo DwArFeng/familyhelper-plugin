@@ -11,6 +11,6 @@ import com.dwarfeng.subgrade.stack.service.EntireLookupService;
  * @author DwArFeng
  * @since 1.0.0
  */
-public interface SenderExecutorSupportMaintainService extends BatchCrudService<StringIdKey, SendExecutorSupport>,
+public interface SendExecutorSupportMaintainService extends BatchCrudService<StringIdKey, SendExecutorSupport>,
         EntireLookupService<SendExecutorSupport> {
 }

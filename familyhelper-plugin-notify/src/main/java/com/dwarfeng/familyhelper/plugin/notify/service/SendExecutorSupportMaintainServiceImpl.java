@@ -15,12 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class SenderExecutorSupportMaintainServiceImpl implements SenderExecutorSupportMaintainService {
+public class SendExecutorSupportMaintainServiceImpl implements SendExecutorSupportMaintainService {
 
     private final DaoOnlyBatchCrudService<StringIdKey, SendExecutorSupport> crudService;
     private final DaoOnlyEntireLookupService<SendExecutorSupport> entireLookupService;
 
-    public SenderExecutorSupportMaintainServiceImpl(
+    public SendExecutorSupportMaintainServiceImpl(
             DaoOnlyBatchCrudService<StringIdKey, SendExecutorSupport> crudService,
             DaoOnlyEntireLookupService<SendExecutorSupport> entireLookupService
     ) {
