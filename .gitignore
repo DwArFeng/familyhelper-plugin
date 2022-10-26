@@ -52,9 +52,28 @@ buildNumber.properties
 #################
 ## Logger Files
 #################
-/familyhelper-plugin-notify/logs/
+/notify-sdk/logs/
+/notify-impl/logs/
+/notify-node/logs/
 
 #################
 ## Configuration Files
 #################
-/familyhelper-plugin-notify/conf/
+/notify-impl/conf/
+/notify-sdk/conf/
+/notify-node/conf/
+
+#################
+## Libext Files
+#################
+/notify-node/libext/
+
+#################
+## Opt Files
+#################
+/notify-node/opt/
+
+#################
+## Optext Files
+#################
+/notify-node/optext/
