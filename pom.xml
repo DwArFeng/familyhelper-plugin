@@ -24,9 +24,8 @@
         <!-- 集中定义依赖版本号 -->
         <junit.version>4.13.1</junit.version>
         <spring.version>5.3.20</spring.version>
-        <notify.version>1.0.6.a</notify.version>
-        <rbac.version>1.4.2.a</rbac.version>
-        <familyhelper-clannad.version>1.2.3.a-SNAPSHOT</familyhelper-clannad.version>
+        <notify.version>1.0.1.a</notify.version>
+        <familyhelper-clannad.version>1.2.2.a</familyhelper-clannad.version>
         <!-- Maven插件版本声明 -->
         <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
@@ -66,12 +65,6 @@
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>notify-impl</artifactId>
                 <version>${notify.version}</version>
-            </dependency>
-            <!-- rbac组件 -->
-            <dependency>
-                <groupId>com.dwarfeng</groupId>
-                <artifactId>rbac-distributed-service-stack</artifactId>
-                <version>${rbac.version}</version>
             </dependency>
             <!-- familyhelper-clannad组件 -->
             <dependency>

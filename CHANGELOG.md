@@ -4,11 +4,8 @@
 
 #### 功能构建
 
-- 实现 notify 模块插件以及配套服务。
-  - com.dwarfeng.familyhelper.plugin.notify.handler.router.FamilyhelperRouterRegistry。
-  - com.dwarfeng.familyhelper.plugin.notify.handler.sender.FamilyhelperSenderRegistry。
-  - com.dwarfeng.familyhelper.plugin.notify.service.SenderExecutorSupportMaintainService。
-  - com.dwarfeng.familyhelper.plugin.notify.service.SyncService。
+- 实现 notify 模块插件。
+  - com.dwarfeng.familyhelper.plugin.notify.sender.EmbeddedTextSenderRegistry。
 
 - 项目建立，清除测试通过。
 
