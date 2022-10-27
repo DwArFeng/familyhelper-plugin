@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress SpringFacetInspection -->
+<beans
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://dubbo.apache.org/schema/dubbo
+        http://dubbo.apache.org/schema/dubbo/dubbo.xsd"
+>
+
+    <!--扫描 router 的实现包。 -->
+    <context:component-scan base-package="com.dwarfeng.familyhelper.plugin.notify.handler.router"/>
+    <!--扫描 dispatcher 的实现包。 -->
+    <context:component-scan base-package="com.dwarfeng.familyhelper.plugin.notify.handler.dispatcher"/>
+    <!--扫描 sender 的实现包。 -->
+    <context:component-scan base-package="com.dwarfeng.familyhelper.plugin.notify.handler.sender"/>
+
+    <!-- 向注册中心注册暴露服务地址,注册消费者服务 -->
+    <dubbo:reference
+            id="userLookupService"
+            interface="com.dwarfeng.rbacds.stack.service.UserLookupService"
+            check="false"
+            timeout="60000"
+            retries="3"
+    />
+    <dubbo:reference
+            id="notificationOperateService"
+            interface="com.dwarfeng.familyhelper.clannad.stack.service.NotificationOperateService"
+            check="false"
+            timeout="60000"
+            retries="3"
+    />
+
+    <!-- 注册表达式解析器以及对应的上下文 -->
+    <bean class="org.springframework.expression.spel.standard.SpelExpressionParser"/>
+    <bean class="org.springframework.expression.common.TemplateParserContext"/>
+</beans>
