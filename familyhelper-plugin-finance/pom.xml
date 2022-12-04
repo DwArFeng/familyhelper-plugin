@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <project
         xmlns="http://maven.apache.org/POM/4.0.0"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-         http://maven.apache.org/xsd/maven-4.0.0.xsd"
+        http://maven.apache.org/xsd/maven-4.0.0.xsd"
 >
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>familyhelper-plugin</artifactId>
         <groupId>com.dwarfeng</groupId>
+        <artifactId>familyhelper-plugin</artifactId>
         <version>1.0.0.a-SNAPSHOT</version>
     </parent>
 
-    <artifactId>familyhelper-plugin-notify</artifactId>
-    <name>familyhelper-plugin-notify</name>
+    <artifactId>familyhelper-plugin-finance</artifactId>
+    <name>familyhelper-plugin-finance</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -37,7 +36,19 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <scope>test</scope>
+        </dependency>
+        <!-- familyhelper-finance组件 -->
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>familyhelper-finance-stack</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>familyhelper-finance-sdk</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>familyhelper-finance-impl</artifactId>
         </dependency>
         <!-- notify组件 -->
         <dependency>
@@ -52,15 +63,10 @@
             <groupId>com.dwarfeng</groupId>
             <artifactId>notify-impl</artifactId>
         </dependency>
-        <!-- rbac组件 -->
+        <!-- 程序自身组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
-            <artifactId>rbac-distributed-service-stack</artifactId>
-        </dependency>
-        <!-- familyhelper-clannad组件 -->
-        <dependency>
-            <groupId>com.dwarfeng</groupId>
-            <artifactId>familyhelper-clannad-stack</artifactId>
+            <artifactId>familyhelper-plugin-notify</artifactId>
         </dependency>
     </dependencies>
 
