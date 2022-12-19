@@ -4,6 +4,7 @@ import com.dwarfeng.familyhelper.finance.impl.handler.pusher.AbstractPusher;
 import com.dwarfeng.familyhelper.finance.sdk.bean.entity.FastJsonAccountBook;
 import com.dwarfeng.familyhelper.finance.stack.bean.dto.RemindInfo;
 import com.dwarfeng.familyhelper.finance.stack.bean.entity.User;
+import com.dwarfeng.familyhelper.plugin.notify.handler.router.PermissionRouterRegistry;
 import com.dwarfeng.familyhelper.plugin.notify.handler.sender.BuiltinSenderRegistry;
 import com.dwarfeng.notify.impl.handler.dispatcher.EntireDispatcherRegistry;
 import com.dwarfeng.notify.impl.handler.router.IdentityRouterRegistry;
@@ -36,8 +37,10 @@ public class FamilyhelperPusher extends AbstractPusher {
 
     private final NotifyService notifyService;
 
-    @Value("${pusher.familyhelper.notify_setting_id}")
-    private long notifySettingId;
+    @Value("${pusher.familyhelper.notify_setting_id.remind_happened}")
+    private long remindHappenedNotifySettingId;
+    @Value("${pusher.familyhelper.notify_setting_id.remind_drive_reset}")
+    private long remindDriveResetNotifySettingId;
 
     public FamilyhelperPusher(
             @Qualifier("notifyService") NotifyService notifyService
@@ -46,10 +49,11 @@ public class FamilyhelperPusher extends AbstractPusher {
         this.notifyService = notifyService;
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public void remindHappened(RemindInfo remindInfo) throws HandlerException {
         try {
-            LongIdKey notifySettingKey = new LongIdKey(notifySettingId);
+            LongIdKey notifySettingKey = new LongIdKey(remindHappenedNotifySettingId);
 
             // 构造 routeInfoDetails。
             List<NotifyInfo.InfoDetail> routeInfoDetails = new ArrayList<>();
@@ -72,6 +76,34 @@ public class FamilyhelperPusher extends AbstractPusher {
             sendInfoDetails.add(new NotifyInfo.InfoDetail(
                     BuiltinSenderRegistry.SENDER_TYPE, BuiltinSenderRegistry.toSendInfo(placeholderMap)
             ));
+
+            notifyService.notify(
+                    new NotifyInfo(notifySettingKey, routeInfoDetails, dispatchInfoDetails, sendInfoDetails)
+            );
+        } catch (Exception e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    @Override
+    public void remindDriveReset() throws HandlerException {
+        try {
+            LongIdKey notifySettingKey = new LongIdKey(remindDriveResetNotifySettingId);
+
+            // 构造 routeInfoDetails。
+            List<NotifyInfo.InfoDetail> routeInfoDetails = new ArrayList<>();
+            routeInfoDetails.add(new NotifyInfo.InfoDetail(PermissionRouterRegistry.ROUTER_TYPE, StringUtils.EMPTY));
+
+            // 构造 dispatchInfoDetails。
+            List<NotifyInfo.InfoDetail> dispatchInfoDetails = new ArrayList<>();
+            dispatchInfoDetails.add(new NotifyInfo.InfoDetail(
+                    EntireDispatcherRegistry.DISPATCHER_TYPE, StringUtils.EMPTY
+            ));
+
+            // 构造 sendInfoDetails。
+            List<NotifyInfo.InfoDetail> sendInfoDetails = new ArrayList<>();
+            sendInfoDetails.add(new NotifyInfo.InfoDetail(BuiltinSenderRegistry.SENDER_TYPE, StringUtils.EMPTY));
 
             notifyService.notify(
                     new NotifyInfo(notifySettingKey, routeInfoDetails, dispatchInfoDetails, sendInfoDetails)
