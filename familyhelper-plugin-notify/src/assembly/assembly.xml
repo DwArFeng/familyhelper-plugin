@@ -25,6 +25,14 @@
 
     <fileSets>
         <fileSet>
+            <outputDirectory>confext</outputDirectory>
+            <directory>src/main/resources/confext</directory>
+            <includes>
+                <include>*.properties</include>
+            </includes>
+            <fileMode>0644</fileMode>
+        </fileSet>
+        <fileSet>
             <outputDirectory>optext</outputDirectory>
             <directory>src/main/resources/optext</directory>
             <includes>
