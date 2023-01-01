@@ -28,9 +28,9 @@
         <!-- 集中定义依赖版本号 -->
         <junit.version>4.13.2</junit.version>
         <spring.version>5.3.20</spring.version>
-        <notify.version>1.2.2.a</notify.version>
+        <notify.version>1.2.3.a</notify.version>
         <rbac.version>1.5.0.a</rbac.version>
-        <familyhelper-finance.version>1.4.4.a</familyhelper-finance.version>
+        <familyhelper-finance.version>1.4.5.a</familyhelper-finance.version>
         <familyhelper-clannad.version>1.2.2.a</familyhelper-clannad.version>
         <!-- Maven插件版本声明 -->
         <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
