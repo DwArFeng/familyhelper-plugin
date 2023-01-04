@@ -1,6 +1,7 @@
 package com.dwarfeng.familyhelper.plugin.notify.handler.sender;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.NotificationCreateInfo;
 import com.dwarfeng.familyhelper.clannad.stack.service.NotificationOperateService;
 import com.dwarfeng.notify.impl.handler.sender.AbstractSenderRegistry;
@@ -204,8 +205,9 @@ public class BuiltinSenderRegistry extends AbstractSenderRegistry {
 
     public static class Config implements Bean {
 
-        private static final long serialVersionUID = 6707057294108220655L;
+        private static final long serialVersionUID = -8939272845398435273L;
 
+        @JSONField(name = "template", ordinal = 1)
         private String template;
 
         public Config() {
