@@ -4,7 +4,12 @@
 
 #### 功能构建
 
-- (无)
+- 实现 `notify` 模块的发送器。
+  - com.dwarfeng.familyhelper.plugin.notify.handler.sender.EmailSenderRegistry。
+
+- 更改推送器，使其支持电子邮件发送。
+  - com.dwarfeng.familyhelper.plugin.finance.handler.pusher.FamilyhelperPusher。
+  - com.dwarfeng.familyhelper.plugin.notify.handler.pusher.FamilyhelperPusher。
 
 #### Bug修复
 

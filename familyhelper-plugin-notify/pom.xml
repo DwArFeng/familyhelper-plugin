@@ -39,6 +39,11 @@
             <artifactId>spring-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- 电子邮件组件 -->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+        </dependency>
         <!-- notify组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>

@@ -28,6 +28,7 @@
         <!-- 集中定义依赖版本号 -->
         <junit.version>4.13.2</junit.version>
         <spring.version>5.3.20</spring.version>
+        <javax.mail.version>1.6.2</javax.mail.version>
         <notify.version>1.2.3.a</notify.version>
         <rbac.version>1.5.0.a</rbac.version>
         <familyhelper-finance.version>1.4.5.a</familyhelper-finance.version>
@@ -57,6 +58,12 @@
                 <artifactId>spring-test</artifactId>
                 <version>${spring.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <!-- 电子邮件组件 -->
+            <dependency>
+                <groupId>com.sun.mail</groupId>
+                <artifactId>javax.mail</artifactId>
+                <version>${javax.mail.version}</version>
             </dependency>
             <!-- notify组件 -->
             <dependency>

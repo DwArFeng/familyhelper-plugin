@@ -19,6 +19,8 @@
                 <include>com.dwarfeng:familyhelper-plugin*</include>
                 <include>com.dwarfeng:familyhelper-clannad*</include>
                 <include>com.dwarfeng:rbac-distributed-service*</include>
+                <include>com.sun.mail:javax.mail</include>
+                <include>javax.activation:activation</include>
             </includes>
         </dependencySet>
     </dependencySets>

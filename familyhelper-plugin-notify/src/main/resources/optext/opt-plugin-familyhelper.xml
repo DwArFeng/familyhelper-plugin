@@ -38,6 +38,13 @@
             retries="3"
     />
     <dubbo:reference
+            id="profileMaintainService"
+            interface="com.dwarfeng.familyhelper.clannad.stack.service.ProfileMaintainService"
+            check="false"
+            timeout="60000"
+            retries="3"
+    />
+    <dubbo:reference
             id="notifyService"
             interface="com.dwarfeng.notify.stack.service.NotifyService"
             check="false"

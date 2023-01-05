@@ -1,7 +1,9 @@
 package com.dwarfeng.familyhelper.plugin.notify.handler.pusher;
 
+import com.dwarfeng.familyhelper.plugin.notify.handler.dispatcher.GeneralDispatcherRegistry;
 import com.dwarfeng.familyhelper.plugin.notify.handler.router.PermissionRouterRegistry;
 import com.dwarfeng.familyhelper.plugin.notify.handler.sender.BuiltinSenderRegistry;
+import com.dwarfeng.familyhelper.plugin.notify.handler.sender.EmailSenderRegistry;
 import com.dwarfeng.notify.impl.handler.dispatcher.EntireDispatcherRegistry;
 import com.dwarfeng.notify.impl.handler.pusher.AbstractPusher;
 import com.dwarfeng.notify.stack.bean.dto.NotifyInfo;
@@ -67,10 +69,14 @@ public class FamilyhelperPusher extends AbstractPusher {
             dispatchInfoDetails.add(new NotifyInfo.InfoDetail(
                     EntireDispatcherRegistry.DISPATCHER_TYPE, StringUtils.EMPTY
             ));
+            dispatchInfoDetails.add(new NotifyInfo.InfoDetail(
+                    GeneralDispatcherRegistry.DISPATCHER_TYPE, StringUtils.EMPTY
+            ));
 
             // 构造 sendInfoDetails。
             List<NotifyInfo.InfoDetail> sendInfoDetails = new ArrayList<>();
             sendInfoDetails.add(new NotifyInfo.InfoDetail(BuiltinSenderRegistry.SENDER_TYPE, StringUtils.EMPTY));
+            sendInfoDetails.add(new NotifyInfo.InfoDetail(EmailSenderRegistry.SENDER_TYPE, StringUtils.EMPTY));
 
             notifyService.notify(
                     new NotifyInfo(notifySettingKey, routeInfoDetails, dispatchInfoDetails, sendInfoDetails)
@@ -95,10 +101,14 @@ public class FamilyhelperPusher extends AbstractPusher {
             dispatchInfoDetails.add(new NotifyInfo.InfoDetail(
                     EntireDispatcherRegistry.DISPATCHER_TYPE, StringUtils.EMPTY
             ));
+            dispatchInfoDetails.add(new NotifyInfo.InfoDetail(
+                    GeneralDispatcherRegistry.DISPATCHER_TYPE, StringUtils.EMPTY
+            ));
 
             // 构造 sendInfoDetails。
             List<NotifyInfo.InfoDetail> sendInfoDetails = new ArrayList<>();
             sendInfoDetails.add(new NotifyInfo.InfoDetail(BuiltinSenderRegistry.SENDER_TYPE, StringUtils.EMPTY));
+            sendInfoDetails.add(new NotifyInfo.InfoDetail(EmailSenderRegistry.SENDER_TYPE, StringUtils.EMPTY));
 
             notifyService.notify(
                     new NotifyInfo(notifySettingKey, routeInfoDetails, dispatchInfoDetails, sendInfoDetails)
@@ -123,10 +133,14 @@ public class FamilyhelperPusher extends AbstractPusher {
             dispatchInfoDetails.add(new NotifyInfo.InfoDetail(
                     EntireDispatcherRegistry.DISPATCHER_TYPE, StringUtils.EMPTY
             ));
+            dispatchInfoDetails.add(new NotifyInfo.InfoDetail(
+                    GeneralDispatcherRegistry.DISPATCHER_TYPE, StringUtils.EMPTY
+            ));
 
             // 构造 sendInfoDetails。
             List<NotifyInfo.InfoDetail> sendInfoDetails = new ArrayList<>();
             sendInfoDetails.add(new NotifyInfo.InfoDetail(BuiltinSenderRegistry.SENDER_TYPE, StringUtils.EMPTY));
+            sendInfoDetails.add(new NotifyInfo.InfoDetail(EmailSenderRegistry.SENDER_TYPE, StringUtils.EMPTY));
 
             notifyService.notify(
                     new NotifyInfo(notifySettingKey, routeInfoDetails, dispatchInfoDetails, sendInfoDetails)
