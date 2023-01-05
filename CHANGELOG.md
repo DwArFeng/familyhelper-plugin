@@ -11,6 +11,10 @@
   - com.dwarfeng.familyhelper.plugin.finance.handler.pusher.FamilyhelperPusher。
   - com.dwarfeng.familyhelper.plugin.notify.handler.pusher.FamilyhelperPusher。
 
+- 将推送器的推送方法优化为非阻塞方法。
+  - com.dwarfeng.familyhelper.plugin.notify.handler.pusher.FamilyhelperPusher。
+  - com.dwarfeng.familyhelper.plugin.finance.handler.pusher.FamilyhelperPusher。
+
 #### Bug修复
 
 - (无)

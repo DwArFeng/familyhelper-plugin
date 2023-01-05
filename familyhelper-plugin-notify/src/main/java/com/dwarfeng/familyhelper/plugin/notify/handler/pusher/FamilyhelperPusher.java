@@ -10,10 +10,12 @@ import com.dwarfeng.notify.stack.bean.dto.NotifyInfo;
 import com.dwarfeng.notify.stack.bean.entity.SendHistory;
 import com.dwarfeng.notify.stack.service.NotifyService;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
-import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -30,7 +32,11 @@ public class FamilyhelperPusher extends AbstractPusher {
 
     public static final String SUPPORT_TYPE = "familyhelper";
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(FamilyhelperPusher.class);
+
     private final NotifyService notifyService;
+
+    private final ThreadPoolTaskExecutor executor;
 
     @Value("${pusher.familyhelper.notify_setting_id.route_reset}")
     private long routeResetNotifySettingId;
@@ -40,10 +46,12 @@ public class FamilyhelperPusher extends AbstractPusher {
     private long sendResetNotifySettingId;
 
     public FamilyhelperPusher(
-            @Qualifier("notifyService") NotifyService notifyService
+            @Qualifier("notifyService") NotifyService notifyService,
+            ThreadPoolTaskExecutor executor
     ) {
         super(SUPPORT_TYPE);
         this.notifyService = notifyService;
+        this.executor = executor;
     }
 
     @Override
@@ -54,9 +62,13 @@ public class FamilyhelperPusher extends AbstractPusher {
     public void notifySent(List<SendHistory> sendHistories) {
     }
 
-    @SuppressWarnings("DuplicatedCode")
     @Override
-    public void routeReset() throws HandlerException {
+    public void routeReset() {
+        executor.submit(this::internalRouteReset);
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    private void internalRouteReset() {
         try {
             LongIdKey notifySettingKey = new LongIdKey(routeResetNotifySettingId);
 
@@ -82,13 +94,17 @@ public class FamilyhelperPusher extends AbstractPusher {
                     new NotifyInfo(notifySettingKey, routeInfoDetails, dispatchInfoDetails, sendInfoDetails)
             );
         } catch (Exception e) {
-            throw new HandlerException(e);
+            LOGGER.warn("发送路由重置消息时发送异常, 消息将不会被发送, 异常信息如下: ", e);
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     @Override
-    public void dispatchReset() throws HandlerException {
+    public void dispatchReset() {
+        executor.submit(this::internalDispatchReset);
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    private void internalDispatchReset() {
         try {
             LongIdKey notifySettingKey = new LongIdKey(dispatchResetNotifySettingId);
 
@@ -114,13 +130,17 @@ public class FamilyhelperPusher extends AbstractPusher {
                     new NotifyInfo(notifySettingKey, routeInfoDetails, dispatchInfoDetails, sendInfoDetails)
             );
         } catch (Exception e) {
-            throw new HandlerException(e);
+            LOGGER.warn("发送调度重置消息时发送异常, 消息将不会被发送, 异常信息如下: ", e);
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     @Override
-    public void sendReset() throws HandlerException {
+    public void sendReset() {
+        executor.submit(this::internalSendReset);
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    private void internalSendReset() {
         try {
             LongIdKey notifySettingKey = new LongIdKey(sendResetNotifySettingId);
 
@@ -146,7 +166,7 @@ public class FamilyhelperPusher extends AbstractPusher {
                     new NotifyInfo(notifySettingKey, routeInfoDetails, dispatchInfoDetails, sendInfoDetails)
             );
         } catch (Exception e) {
-            throw new HandlerException(e);
+            LOGGER.warn("发送发送重置消息时发送异常, 消息将不会被发送, 异常信息如下: ", e);
         }
     }
 }

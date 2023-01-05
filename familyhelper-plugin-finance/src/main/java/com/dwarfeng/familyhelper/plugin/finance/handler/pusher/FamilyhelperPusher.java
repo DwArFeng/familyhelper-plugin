@@ -14,10 +14,12 @@ import com.dwarfeng.notify.stack.bean.dto.NotifyInfo;
 import com.dwarfeng.notify.stack.service.NotifyService;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
-import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -37,7 +39,11 @@ public class FamilyhelperPusher extends AbstractPusher {
 
     public static final String SUPPORT_TYPE = "familyhelper";
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(FamilyhelperPusher.class);
+
     private final NotifyService notifyService;
+
+    private final ThreadPoolTaskExecutor executor;
 
     @Value("${pusher.familyhelper.notify_setting_id.remind_happened}")
     private long remindHappenedNotifySettingId;
@@ -45,15 +51,21 @@ public class FamilyhelperPusher extends AbstractPusher {
     private long remindDriveResetNotifySettingId;
 
     public FamilyhelperPusher(
-            @Qualifier("notifyService") NotifyService notifyService
+            @Qualifier("notifyService") NotifyService notifyService,
+            ThreadPoolTaskExecutor executor
     ) {
         super(SUPPORT_TYPE);
         this.notifyService = notifyService;
+        this.executor = executor;
+    }
+
+    @Override
+    public void remindHappened(RemindInfo remindInfo) {
+        executor.submit(() -> internalRemindHappened(remindInfo));
     }
 
     @SuppressWarnings("DuplicatedCode")
-    @Override
-    public void remindHappened(RemindInfo remindInfo) throws HandlerException {
+    private void internalRemindHappened(RemindInfo remindInfo) {
         try {
             LongIdKey notifySettingKey = new LongIdKey(remindHappenedNotifySettingId);
 
@@ -89,13 +101,17 @@ public class FamilyhelperPusher extends AbstractPusher {
                     new NotifyInfo(notifySettingKey, routeInfoDetails, dispatchInfoDetails, sendInfoDetails)
             );
         } catch (Exception e) {
-            throw new HandlerException(e);
+            LOGGER.warn("发送余额记录提醒消息时发送异常, 消息将不会被发送, 异常信息如下: ", e);
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     @Override
-    public void remindDriveReset() throws HandlerException {
+    public void remindDriveReset() {
+        executor.submit(this::internalRemindDriveReset);
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    private void internalRemindDriveReset() {
         try {
             LongIdKey notifySettingKey = new LongIdKey(remindDriveResetNotifySettingId);
 
@@ -121,7 +137,7 @@ public class FamilyhelperPusher extends AbstractPusher {
                     new NotifyInfo(notifySettingKey, routeInfoDetails, dispatchInfoDetails, sendInfoDetails)
             );
         } catch (Exception e) {
-            throw new HandlerException(e);
+            LOGGER.warn("发送提醒驱动重置消息时发送异常, 消息将不会被发送, 异常信息如下: ", e);
         }
     }
 }
