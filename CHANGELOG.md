@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 实现 `familyhelper-clannad` 模块的推送器。
+  - com.dwarfeng.familyhelper.plugin.clannad.handler.pusher.FamilyhelperPusher。
+
 - 实现 `notify` 模块的发送器。
   - com.dwarfeng.familyhelper.plugin.notify.handler.sender.EmailSenderRegistry。
 
