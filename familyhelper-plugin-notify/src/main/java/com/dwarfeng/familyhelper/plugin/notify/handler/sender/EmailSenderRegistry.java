@@ -44,43 +44,43 @@ public class EmailSenderRegistry extends AbstractSenderRegistry {
     public static final String SENDER_TYPE = "email_sender";
 
     /**
-     * 将指定的发送参数转换为参数。
+     * 将指定的发送器参数转换为字符串。
      *
-     * @param config 指定的发送参数。
-     * @return 指定的参数转换成的参数。
+     * @param config 指定的发送器参数。
+     * @return 指定的参数转换成的字符串。
      */
-    public static String toParam(Config config) {
+    public static String stringifyParam(Config config) {
         return JSON.toJSONString(config, false);
     }
 
     /**
-     * 解析参数并获取发送参数。
+     * 从字符串中解析发送器参数。
      *
-     * @param param 指定的参数。
-     * @return 解析参数获取到的发送参数。
+     * @param string 指定的字符串。
+     * @return 解析指定的字符串获取到的发送器参数。
      */
-    public static Config parseParam(String param) {
-        return JSON.parseObject(param, Config.class);
+    public static Config parseParam(String string) {
+        return JSON.parseObject(string, Config.class);
     }
 
     /**
-     * 将指定的发送参数转换为发送信息文本。
+     * 将指定的占位符映射转换为字符串。
      *
-     * @param placeholderMap 指定的发送参数。
-     * @return 指定的参数转换成的发送信息文本。
+     * @param placeholderMap 指定的占位符映射。
+     * @return 指定的占位符映射转换成的字符串。
      */
-    public static String toSendInfo(Map<String, Object> placeholderMap) {
+    public static String stringifyPlaceholderMap(Map<String, Object> placeholderMap) {
         return JSON.toJSONString(placeholderMap, false);
     }
 
     /**
-     * 解析发送信息文本并获取发送参数。
+     * 从指定的字符串中解析占位符映射。
      *
-     * @param sendInfo 指定的发送信息文本。
-     * @return 解析发送信息文本获取到的发送参数。
+     * @param string 指定的字符串。
+     * @return 解析指定的字符串获取到的占位符映射。
      */
-    public static Map<String, Object> parseSendInfo(String sendInfo) {
-        return JSON.parseObject(sendInfo);
+    public static Map<String, Object> parsePlaceholderMap(String string) {
+        return JSON.parseObject(string);
     }
 
     private final ApplicationContext ctx;
@@ -121,7 +121,8 @@ public class EmailSenderRegistry extends AbstractSenderRegistry {
                 Arrays.asList(
                         new Config.Attachment("报警报告-#{[DATE]}.pdf", "#{[ALARM_CONTENT]}"),
                         new Config.Attachment("解决方案参考.pdf", "#{[SOLUTION]}")
-                )
+                ),
+                "your-placeholder-map-key-here"
         );
         return JSON.toJSONString(config, false);
     }
@@ -176,7 +177,7 @@ public class EmailSenderRegistry extends AbstractSenderRegistry {
         }
 
         @Override
-        public List<Response> send(String sendInfo, List<StringIdKey> userKeys, Context context)
+        public List<Response> send(Map<String, String> sendInfoMap, List<StringIdKey> userKeys, Context context)
                 throws SenderException {
             try {
                 // 定义结果。
@@ -184,7 +185,7 @@ public class EmailSenderRegistry extends AbstractSenderRegistry {
 
                 // 建立中间变量（会话和信息模板）。
                 Session session = buildSession();
-                Message messageTemplate = buildMessageTemplate(sendInfo, session);
+                Message messageTemplate = buildMessageTemplate(sendInfoMap, session);
 
                 // 遍历用户，调用发送动作。
                 for (StringIdKey userKey : userKeys) {
@@ -214,19 +215,24 @@ public class EmailSenderRegistry extends AbstractSenderRegistry {
             return Session.getInstance(properties, authenticator);
         }
 
-        private Message buildMessageTemplate(String sendInfo, Session session) throws Exception {
+        private Message buildMessageTemplate(Map<String, String> sendInfoMap, Session session) throws Exception {
             String subject;
             String text;
             List<Attachment> attachments;
 
-            if (StringUtils.isEmpty(sendInfo)) {
+            // 获取占位符映射的字符串形式。
+            String placeholderMapString = Optional.ofNullable(sendInfoMap)
+                    .map(map -> map.get(config.getPlaceholderMapKey())).orElse(StringUtils.EMPTY);
+
+            // 获取占位符映射字符串，并返回结果。
+            if (StringUtils.isEmpty(placeholderMapString)) {
                 subject = config.getSubjectTemplate();
                 text = config.getTextTemplate();
                 attachments = config.getAttachments().stream().map(
                         a -> new Attachment(a.getNameTemplate(), a.getContentTemplate())
                 ).collect(Collectors.toList());
             } else {
-                Map<String, Object> placeholderMap = parseSendInfo(sendInfo);
+                Map<String, Object> placeholderMap = parsePlaceholderMap(placeholderMapString);
                 subject = expressionParser.parseExpression(config.getSubjectTemplate(), parserContext)
                         .getValue(placeholderMap, String.class);
                 text = expressionParser.parseExpression(config.getTextTemplate(), parserContext)
@@ -283,12 +289,12 @@ public class EmailSenderRegistry extends AbstractSenderRegistry {
                         .map(Profile::getEmailAddress).orElse(null);
             } catch (Exception e) {
                 LOGGER.warn("个人简介接口调用失败, 电子邮件将不会发送, 异常信息如下: ", e);
-                return new Response(userKey, new Date(), false, "个人简介接口调用失败");
+                return new Response(userKey, false, "个人简介接口调用失败");
             }
 
             // 如果 emailAddressString 没填写，则返回发送失败。
             if (Objects.isNull(emailAddressString)) {
-                return new Response(userKey, new Date(), false, "未维护邮箱地址");
+                return new Response(userKey, false, "未维护邮箱地址");
             }
 
             // 尝试解析电子邮件地址。
@@ -297,7 +303,7 @@ public class EmailSenderRegistry extends AbstractSenderRegistry {
                 emailAddress = new InternetAddress(emailAddressString);
             } catch (Exception e) {
                 LOGGER.warn("无法解析电子邮件地址, 电子邮件将不会发送, 异常信息如下: ", e);
-                return new Response(userKey, new Date(), false, "无法解析电子邮件地址");
+                return new Response(userKey, false, "无法解析电子邮件地址");
             }
 
             // 设置收件人。
@@ -305,16 +311,16 @@ public class EmailSenderRegistry extends AbstractSenderRegistry {
                 messageTemplate.setRecipients(Message.RecipientType.TO, new Address[]{emailAddress});
             } catch (Exception e) {
                 LOGGER.warn("无法设置消息头, 电子邮件将不会发送, 异常信息如下: ", e);
-                return new Response(userKey, new Date(), false, "无法设置消息头");
+                return new Response(userKey, false, "无法设置消息头");
             }
 
             // 尝试发送。
             try {
                 Transport.send(messageTemplate);
-                return new Response(userKey, new Date(), true, "发送成功");
+                return new Response(userKey, true, "发送成功");
             } catch (Exception e) {
                 LOGGER.warn("邮件发送失败,  异常信息如下: ", e);
-                return new Response(userKey, new Date(), false, "邮件发送失败");
+                return new Response(userKey, false, "邮件发送失败");
             }
         }
 
@@ -348,7 +354,7 @@ public class EmailSenderRegistry extends AbstractSenderRegistry {
 
     public static class Config implements Bean {
 
-        private static final long serialVersionUID = 1653885861222274880L;
+        private static final long serialVersionUID = -8235662751642994281L;
 
         @JSONField(name = "smtp_host", ordinal = 1)
         private String smtpHost;
@@ -374,12 +380,15 @@ public class EmailSenderRegistry extends AbstractSenderRegistry {
         @JSONField(name = "attachments", ordinal = 8)
         private List<Attachment> attachments;
 
+        @JSONField(name = "placeholder_map_key", ordinal = 9)
+        private String placeholderMapKey;
+
         public Config() {
         }
 
         public Config(
                 String smtpHost, boolean smtpAuth, String username, String password, String mailFrom,
-                String subjectTemplate, String textTemplate, List<Attachment> attachments
+                String subjectTemplate, String textTemplate, List<Attachment> attachments, String placeholderMapKey
         ) {
             this.smtpHost = smtpHost;
             this.smtpAuth = smtpAuth;
@@ -389,6 +398,7 @@ public class EmailSenderRegistry extends AbstractSenderRegistry {
             this.subjectTemplate = subjectTemplate;
             this.textTemplate = textTemplate;
             this.attachments = attachments;
+            this.placeholderMapKey = placeholderMapKey;
         }
 
         public String getSmtpHost() {
@@ -455,6 +465,14 @@ public class EmailSenderRegistry extends AbstractSenderRegistry {
             this.attachments = attachments;
         }
 
+        public String getPlaceholderMapKey() {
+            return placeholderMapKey;
+        }
+
+        public void setPlaceholderMapKey(String placeholderMapKey) {
+            this.placeholderMapKey = placeholderMapKey;
+        }
+
         @Override
         public String toString() {
             return "Config{" +
@@ -466,6 +484,7 @@ public class EmailSenderRegistry extends AbstractSenderRegistry {
                     ", subjectTemplate='" + subjectTemplate + '\'' +
                     ", textTemplate='" + textTemplate + '\'' +
                     ", attachments=" + attachments +
+                    ", placeholderMapKey='" + placeholderMapKey + '\'' +
                     '}';
         }
 

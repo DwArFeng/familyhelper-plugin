@@ -20,6 +20,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -34,12 +36,32 @@ public class PermissionRouterRegistry extends AbstractRouterRegistry {
     public static final String ROUTER_TYPE = "permission_router";
 
     /**
-     * 将指定的路由参数转换为路由信息文本。
+     * 将指定的路由器参数转换为字符串。
      *
-     * @param extraUserInfo 指定的路由参数。
-     * @return 指定的参数转换成的路由信息文本。
+     * @param config 指定的路由器参数。
+     * @return 指定的参数转换成的字符串。
      */
-    public static String toRouteInfo(ExtraUserInfo extraUserInfo) {
+    public static String stringifyParam(Config config) {
+        return JSON.toJSONString(config, false);
+    }
+
+    /**
+     * 从指定的字符串中解析路由器参数。
+     *
+     * @param string 指定的字符串。
+     * @return 解析指定的字符串获取到的路由器参数。
+     */
+    public static Config parseParam(String string) {
+        return JSON.parseObject(string, Config.class);
+    }
+
+    /**
+     * 将指定的额外用户信息转换为字符串。
+     *
+     * @param extraUserInfo 指定的额外用户信息。
+     * @return 指定的额外用户信息转换成的字符串。
+     */
+    public static String stringifyExtraUserInfo(ExtraUserInfo extraUserInfo) {
         FastJsonExtraUserInfo fastJsonExtraUserInfo = new FastJsonExtraUserInfo(
                 extraUserInfo.isUseBlackList(),
                 extraUserInfo.getBlackList().stream().map(FastJsonStringIdKey::of).collect(Collectors.toList()),
@@ -50,13 +72,13 @@ public class PermissionRouterRegistry extends AbstractRouterRegistry {
     }
 
     /**
-     * 解析路由信息文本并获取路由参数。
+     * 从指定的字符串中解析额外用户信息。
      *
-     * @param routeInfo 指定的路由信息文本。
-     * @return 解析路由信息文本获取到的路由参数。
+     * @param string 指定的字符串。
+     * @return 解析指定的字符串获取到的额外用户信息。
      */
-    public static ExtraUserInfo parseRouteInfo(String routeInfo) {
-        FastJsonExtraUserInfo fastJsonExtraUserInfo = JSON.parseObject(routeInfo, FastJsonExtraUserInfo.class);
+    public static ExtraUserInfo parseExtraUserInfo(String string) {
+        FastJsonExtraUserInfo fastJsonExtraUserInfo = JSON.parseObject(string, FastJsonExtraUserInfo.class);
         return new ExtraUserInfo(
                 fastJsonExtraUserInfo.isUseBlackList(),
                 fastJsonExtraUserInfo.getBlackList().stream().map(FastJsonStringIdKey::toStackBean)
@@ -92,17 +114,18 @@ public class PermissionRouterRegistry extends AbstractRouterRegistry {
 
     @Override
     public String provideExampleParam() {
-        return "notify.your_permission_node_here";
+        Config config = new Config("your-permission-id-here", "your-extra-user-info-here");
+        return JSON.toJSONString(config, false);
     }
 
     @Override
     public Router makeRouter(String type, String param) throws RouterException {
         try {
             // 通过 param 生成路由器的参数。
-            StringIdKey permissionKey = new StringIdKey(param);
+            Config config = parseParam(param);
 
             // 通过 ctx 生成路由器。
-            return ctx.getBean(PermissionRouter.class, userLookupService, permissionKey);
+            return ctx.getBean(PermissionRouter.class, userLookupService, config);
         } catch (Exception e) {
             throw new RouterMakeException(e, type, param);
         }
@@ -121,23 +144,30 @@ public class PermissionRouterRegistry extends AbstractRouterRegistry {
 
         private final UserLookupService userLookupService;
 
-        private final StringIdKey permissionKey;
+        private final Config config;
 
-        public PermissionRouter(UserLookupService userLookupService, StringIdKey permissionKey) {
+        public PermissionRouter(UserLookupService userLookupService, Config config) {
             this.userLookupService = userLookupService;
-            this.permissionKey = permissionKey;
+            this.config = config;
         }
 
         @Override
-        public List<StringIdKey> route(String routeInfo, Context context) throws RouterException {
+        public List<StringIdKey> route(Map<String, String> routeInfoMap, Context context) throws RouterException {
             try {
+                // 获取权限节点主键。
+                StringIdKey permissionKey = new StringIdKey(config.getPermissionId());
+
                 // 初步获取具有权限的所有用户，该步骤可以保证返回的所有用户均符合路由器的返回要求。
                 List<StringIdKey> userKeys = userLookupService.lookupForPermission(permissionKey).stream()
                         .map(User::getKey).collect(Collectors.toList());
 
+                // 获取额外用户信息的字符串形式。
+                String extraUserInfoString = Optional.ofNullable(routeInfoMap)
+                        .map(map -> map.get(config.getExtraUserInfoKey())).orElse(StringUtils.EMPTY);
+
                 // 对额外的用户黑白名单进行判断。
-                if (!StringUtils.isEmpty(routeInfo)) {
-                    ExtraUserInfo extraUserInfo = parseRouteInfo(routeInfo);
+                if (!StringUtils.isEmpty(extraUserInfoString)) {
+                    ExtraUserInfo extraUserInfo = parseExtraUserInfo(extraUserInfoString);
                     if (extraUserInfo.isUseBlackList()) {
                         userKeys.removeAll(extraUserInfo.getBlackList());
                     }
@@ -156,7 +186,50 @@ public class PermissionRouterRegistry extends AbstractRouterRegistry {
         @Override
         public String toString() {
             return "PermissionRouter{" +
-                    "permissionKey=" + permissionKey +
+                    "config=" + config +
+                    '}';
+        }
+    }
+
+    public static class Config implements Bean {
+
+        private static final long serialVersionUID = 6100979168538870041L;
+        
+        @JSONField(name = "permission_id", ordinal = 1)
+        private String permissionId;
+
+        @JSONField(name = "extra_user_info_key", ordinal = 2)
+        private String extraUserInfoKey;
+
+        public Config() {
+        }
+
+        public Config(String permissionId, String extraUserInfoKey) {
+            this.permissionId = permissionId;
+            this.extraUserInfoKey = extraUserInfoKey;
+        }
+
+        public String getPermissionId() {
+            return permissionId;
+        }
+
+        public void setPermissionId(String permissionId) {
+            this.permissionId = permissionId;
+        }
+
+        public String getExtraUserInfoKey() {
+            return extraUserInfoKey;
+        }
+
+        public void setExtraUserInfoKey(String extraUserInfoKey) {
+            this.extraUserInfoKey = extraUserInfoKey;
+        }
+
+        @Override
+        public String toString() {
+            return "Config{" +
+                    "permissionId='" + permissionId + '\'' +
+                    ", extraUserInfoKey='" + extraUserInfoKey + '\'' +
                     '}';
         }
     }

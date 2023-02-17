@@ -23,9 +23,9 @@ import org.springframework.expression.ParserContext;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * 内置发送器注册。
@@ -39,43 +39,43 @@ public class BuiltinSenderRegistry extends AbstractSenderRegistry {
     public static final String SENDER_TYPE = "builtin_sender";
 
     /**
-     * 将指定的发送参数转换为参数。
+     * 将指定的发送器参数转换为字符串。
      *
-     * @param config 指定的发送参数。
-     * @return 指定的参数转换成的参数。
+     * @param config 指定的发送器参数。
+     * @return 指定的参数转换成的字符串。
      */
-    public static String toParam(Config config) {
+    public static String stringifyParam(Config config) {
         return JSON.toJSONString(config, false);
     }
 
     /**
-     * 解析参数并获取发送参数。
+     * 从字符串中解析发送器参数。
      *
-     * @param param 指定的参数。
-     * @return 解析参数获取到的发送参数。
+     * @param string 指定的字符串。
+     * @return 解析指定的字符串获取到的发送器参数。
      */
-    public static Config parseParam(String param) {
-        return JSON.parseObject(param, Config.class);
+    public static Config parseParam(String string) {
+        return JSON.parseObject(string, Config.class);
     }
 
     /**
-     * 将指定的发送参数转换为发送信息文本。
+     * 将指定的占位符映射转换为字符串。
      *
-     * @param placeholderMap 指定的发送参数。
-     * @return 指定的参数转换成的发送信息文本。
+     * @param placeholderMap 指定的占位符映射。
+     * @return 指定的占位符映射转换成的字符串。
      */
-    public static String toSendInfo(Map<String, Object> placeholderMap) {
+    public static String stringifyPlaceholderMap(Map<String, Object> placeholderMap) {
         return JSON.toJSONString(placeholderMap, false);
     }
 
     /**
-     * 解析发送信息文本并获取发送参数。
+     * 从指定的字符串中解析占位符映射。
      *
-     * @param sendInfo 指定的发送信息文本。
-     * @return 解析发送信息文本获取到的发送参数。
+     * @param string 指定的字符串。
+     * @return 解析指定的字符串获取到的占位符映射。
      */
-    public static Map<String, Object> parseSendInfo(String sendInfo) {
-        return JSON.parseObject(sendInfo);
+    public static Map<String, Object> parsePlaceholderMap(String string) {
+        return JSON.parseObject(string);
     }
 
     private final ApplicationContext ctx;
@@ -110,7 +110,11 @@ public class BuiltinSenderRegistry extends AbstractSenderRegistry {
 
     @Override
     public String provideExampleParam() {
-        Config config = new Config("请检查名称为 #{[NAME]} 的设备");
+        Config config = new Config(
+                "主题: 请检查名称为 #{[NAME]} 的设备",
+                "正文: 设备 #{[NAME]} 出现了 #{[NUM]} 个报警，请及时处理",
+                "your-placeholder-map-key-here"
+        );
         return JSON.toJSONString(config, false);
     }
 
@@ -162,25 +166,33 @@ public class BuiltinSenderRegistry extends AbstractSenderRegistry {
         }
 
         @Override
-        public List<Response> send(String sendInfo, List<StringIdKey> userKeys, Context context)
+        public List<Response> send(Map<String, String> sendInfoMap, List<StringIdKey> userKeys, Context context)
                 throws SenderException {
             try {
                 // 定义结果列表。
                 List<Response> result = new ArrayList<>();
 
+                // 获取占位符映射的字符串形式。
+                String placeholderMapString = Optional.ofNullable(sendInfoMap)
+                        .map(map -> map.get(config.getPlaceholderMapKey())).orElse(StringUtils.EMPTY);
+
                 // 解析发送文本。
-                String message;
-                if (StringUtils.isEmpty(sendInfo)) {
-                    message = config.getTemplate();
+                String subject;
+                String body;
+                if (StringUtils.isEmpty(placeholderMapString)) {
+                    subject = config.getSubjectTemplate();
+                    body = config.getBodyTemplate();
                 } else {
-                    Map<String, Object> placeholderMap = parseSendInfo(sendInfo);
-                    message = expressionParser.parseExpression(config.getTemplate(), parserContext)
+                    Map<String, Object> placeholderMap = parsePlaceholderMap(placeholderMapString);
+                    subject = expressionParser.parseExpression(config.getSubjectTemplate(), parserContext)
+                            .getValue(placeholderMap, String.class);
+                    body = expressionParser.parseExpression(config.getBodyTemplate(), parserContext)
                             .getValue(placeholderMap, String.class);
                 }
 
                 // 为每个用户发送消息。
                 for (StringIdKey userKey : userKeys) {
-                    result.add(sendSingleUser(message, userKey));
+                    result.add(sendSingleUser(subject, body, userKey));
                 }
 
                 // 返回结果列表。
@@ -190,45 +202,71 @@ public class BuiltinSenderRegistry extends AbstractSenderRegistry {
             }
         }
 
-        private Response sendSingleUser(String message, StringIdKey userKey) {
+        private Response sendSingleUser(String subject, String body, StringIdKey userKey) {
             try {
                 notificationOperateService.createNotification(new NotificationCreateInfo(
-                        userKey, message, "通过通知服务发送的消息文本"
+                        userKey, subject, body, "通过通知服务发送的消息文本"
                 ));
-                return new Response(userKey, new Date(), true, "发送成功");
+                return new Response(userKey, true, "发送成功");
             } catch (Exception e) {
                 LOGGER.warn("向用户 " + userKey + " 发送通知失败, 异常信息如下: ", e);
-                return new Response(userKey, new Date(), false, "发送失败");
+                return new Response(userKey, false, "发送失败");
             }
         }
     }
 
     public static class Config implements Bean {
 
-        private static final long serialVersionUID = -8939272845398435273L;
+        private static final long serialVersionUID = -7800582757320904399L;
+        
+        @JSONField(name = "subject_template", ordinal = 1)
+        private String subjectTemplate;
 
-        @JSONField(name = "template", ordinal = 1)
-        private String template;
+        @JSONField(name = "body_template", ordinal = 2)
+        private String bodyTemplate;
+
+        @JSONField(name = "placeholder_map_key", ordinal = 3)
+        private String placeholderMapKey;
 
         public Config() {
         }
 
-        public Config(String template) {
-            this.template = template;
+        public Config(String subjectTemplate, String bodyTemplate, String placeholderMapKey) {
+            this.subjectTemplate = subjectTemplate;
+            this.bodyTemplate = bodyTemplate;
+            this.placeholderMapKey = placeholderMapKey;
         }
 
-        public String getTemplate() {
-            return template;
+        public String getSubjectTemplate() {
+            return subjectTemplate;
         }
 
-        public void setTemplate(String template) {
-            this.template = template;
+        public void setSubjectTemplate(String subjectTemplate) {
+            this.subjectTemplate = subjectTemplate;
+        }
+
+        public String getBodyTemplate() {
+            return bodyTemplate;
+        }
+
+        public void setBodyTemplate(String bodyTemplate) {
+            this.bodyTemplate = bodyTemplate;
+        }
+
+        public String getPlaceholderMapKey() {
+            return placeholderMapKey;
+        }
+
+        public void setPlaceholderMapKey(String placeholderMapKey) {
+            this.placeholderMapKey = placeholderMapKey;
         }
 
         @Override
         public String toString() {
             return "Config{" +
-                    "template='" + template + '\'' +
+                    "subjectTemplate='" + subjectTemplate + '\'' +
+                    ", bodyTemplate='" + bodyTemplate + '\'' +
+                    ", placeholderMapKey='" + placeholderMapKey + '\'' +
                     '}';
         }
     }

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 通用调度器注册。
@@ -29,23 +30,23 @@ public class GeneralDispatcherRegistry extends AbstractDispatcherRegistry {
     public static final String DISPATCHER_TYPE = "general_dispatcher";
 
     /**
-     * 将指定的调度参数转换为参数。
+     * 将指定的调度器参数转换为字符串。
      *
-     * @param config 指定的调度参数。
-     * @return 指定的参数转换成的参数。
+     * @param config 指定的调度器参数。
+     * @return 指定的参数转换成的字符串。
      */
-    public static String toParam(Config config) {
+    public static String stringifyParam(Config config) {
         return JSON.toJSONString(config, false);
     }
 
     /**
-     * 解析参数并获取调度参数。
+     * 从指定的字符串中解析调度器参数。
      *
-     * @param param 指定的参数。
-     * @return 解析参数获取到的调度参数。
+     * @param string 指定的字符串。
+     * @return 解析指定的字符串获取到的调度器参数。
      */
-    public static Config parseParam(String param) {
-        return JSON.parseObject(param, Config.class);
+    public static Config parseParam(String string) {
+        return JSON.parseObject(string, Config.class);
     }
 
     private final ApplicationContext ctx;
@@ -68,7 +69,7 @@ public class GeneralDispatcherRegistry extends AbstractDispatcherRegistry {
     @Override
     public String provideExampleParam() {
         Config config = new Config("0000.preferred");
-        return toParam(config);
+        return stringifyParam(config);
     }
 
     @Override
@@ -102,11 +103,13 @@ public class GeneralDispatcherRegistry extends AbstractDispatcherRegistry {
         }
 
         @Override
-        public List<StringIdKey> dispatch(String dispatchInfo, List<StringIdKey> userKeys, Context context) throws DispatcherException {
+        public List<StringIdKey> dispatch(
+                Map<String, String> dispatchInfoMap, List<StringIdKey> userKeys, Context context
+        ) throws DispatcherException {
             try {
                 List<StringIdKey> result = new ArrayList<>();
                 for (StringIdKey userKey : userKeys) {
-                    if (acceptUser(userKey, dispatchInfo, context)) {
+                    if (acceptUser(userKey, dispatchInfoMap, context)) {
                         result.add(userKey);
                     }
                 }
@@ -120,7 +123,7 @@ public class GeneralDispatcherRegistry extends AbstractDispatcherRegistry {
 
         // 随着判断逻辑的增加，下列警告都将消失。
         @SuppressWarnings({"RedundantIfStatement", "unused"})
-        private boolean acceptUser(StringIdKey userKey, String dispatchInfo, Context context)
+        private boolean acceptUser(StringIdKey userKey, Map<String, String> dispatchInfoMap, Context context)
                 throws Exception {
             // 判断用户是否偏好此主题。
             String preferredString = context.getMetaOrDefault(userKey, config.getPreferredMetaId());
@@ -136,7 +139,7 @@ public class GeneralDispatcherRegistry extends AbstractDispatcherRegistry {
 
     public static class Config implements Bean {
 
-        private static final long serialVersionUID = 189049246403824391L;
+        private static final long serialVersionUID = -5275935822413755015L;
 
         @JSONField(name = "preferred_meta_id", ordinal = 1)
         private String preferredMetaId;

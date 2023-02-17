@@ -1,16 +1,10 @@
 package com.dwarfeng.familyhelper.plugin.notify.handler.pusher;
 
-import com.dwarfeng.familyhelper.plugin.notify.handler.dispatcher.GeneralDispatcherRegistry;
-import com.dwarfeng.familyhelper.plugin.notify.handler.router.PermissionRouterRegistry;
-import com.dwarfeng.familyhelper.plugin.notify.handler.sender.BuiltinSenderRegistry;
-import com.dwarfeng.familyhelper.plugin.notify.handler.sender.EmailSenderRegistry;
-import com.dwarfeng.notify.impl.handler.dispatcher.EntireDispatcherRegistry;
 import com.dwarfeng.notify.impl.handler.pusher.AbstractPusher;
+import com.dwarfeng.notify.stack.bean.dto.NotifyHistoryRecordInfo;
 import com.dwarfeng.notify.stack.bean.dto.NotifyInfo;
-import com.dwarfeng.notify.stack.bean.entity.SendHistory;
 import com.dwarfeng.notify.stack.service.NotifyService;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,8 +12,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.Map;
 
 /**
  * 家庭助手推送器。
@@ -55,11 +49,7 @@ public class FamilyhelperPusher extends AbstractPusher {
     }
 
     @Override
-    public void notifySent(SendHistory sendHistory) {
-    }
-
-    @Override
-    public void notifySent(List<SendHistory> sendHistories) {
+    public void notifyHistoryRecorded(NotifyHistoryRecordInfo info) {
     }
 
     @Override
@@ -72,27 +62,17 @@ public class FamilyhelperPusher extends AbstractPusher {
         try {
             LongIdKey notifySettingKey = new LongIdKey(routeResetNotifySettingId);
 
-            // 构造 routeInfoDetails。
-            List<NotifyInfo.InfoDetail> routeInfoDetails = new ArrayList<>();
-            routeInfoDetails.add(new NotifyInfo.InfoDetail(PermissionRouterRegistry.ROUTER_TYPE, StringUtils.EMPTY));
+            // 构造 routeInfoMap。
+            Map<String, String> routeInfoMap = Collections.emptyMap();
 
-            // 构造 dispatchInfoDetails。
-            List<NotifyInfo.InfoDetail> dispatchInfoDetails = new ArrayList<>();
-            dispatchInfoDetails.add(new NotifyInfo.InfoDetail(
-                    EntireDispatcherRegistry.DISPATCHER_TYPE, StringUtils.EMPTY
-            ));
-            dispatchInfoDetails.add(new NotifyInfo.InfoDetail(
-                    GeneralDispatcherRegistry.DISPATCHER_TYPE, StringUtils.EMPTY
-            ));
+            // 构造 dispatchInfoMap。
+            Map<String, String> dispatchInfoMap = Collections.emptyMap();
 
-            // 构造 sendInfoDetails。
-            List<NotifyInfo.InfoDetail> sendInfoDetails = new ArrayList<>();
-            sendInfoDetails.add(new NotifyInfo.InfoDetail(BuiltinSenderRegistry.SENDER_TYPE, StringUtils.EMPTY));
-            sendInfoDetails.add(new NotifyInfo.InfoDetail(EmailSenderRegistry.SENDER_TYPE, StringUtils.EMPTY));
+            // 构造 sendInfoMap。
+            Map<String, String> sendInfoMap = Collections.emptyMap();
 
-            notifyService.notify(
-                    new NotifyInfo(notifySettingKey, routeInfoDetails, dispatchInfoDetails, sendInfoDetails)
-            );
+            // 调用通知方法。
+            notifyService.notify(new NotifyInfo(notifySettingKey, routeInfoMap, dispatchInfoMap, sendInfoMap));
         } catch (Exception e) {
             LOGGER.warn("发送路由重置消息时发送异常, 消息将不会被发送, 异常信息如下: ", e);
         }
@@ -108,27 +88,17 @@ public class FamilyhelperPusher extends AbstractPusher {
         try {
             LongIdKey notifySettingKey = new LongIdKey(dispatchResetNotifySettingId);
 
-            // 构造 routeInfoDetails。
-            List<NotifyInfo.InfoDetail> routeInfoDetails = new ArrayList<>();
-            routeInfoDetails.add(new NotifyInfo.InfoDetail(PermissionRouterRegistry.ROUTER_TYPE, StringUtils.EMPTY));
+            // 构造 routeInfoMap。
+            Map<String, String> routeInfoMap = Collections.emptyMap();
 
-            // 构造 dispatchInfoDetails。
-            List<NotifyInfo.InfoDetail> dispatchInfoDetails = new ArrayList<>();
-            dispatchInfoDetails.add(new NotifyInfo.InfoDetail(
-                    EntireDispatcherRegistry.DISPATCHER_TYPE, StringUtils.EMPTY
-            ));
-            dispatchInfoDetails.add(new NotifyInfo.InfoDetail(
-                    GeneralDispatcherRegistry.DISPATCHER_TYPE, StringUtils.EMPTY
-            ));
+            // 构造 dispatchInfoMap。
+            Map<String, String> dispatchInfoMap = Collections.emptyMap();
 
-            // 构造 sendInfoDetails。
-            List<NotifyInfo.InfoDetail> sendInfoDetails = new ArrayList<>();
-            sendInfoDetails.add(new NotifyInfo.InfoDetail(BuiltinSenderRegistry.SENDER_TYPE, StringUtils.EMPTY));
-            sendInfoDetails.add(new NotifyInfo.InfoDetail(EmailSenderRegistry.SENDER_TYPE, StringUtils.EMPTY));
+            // 构造 sendInfoMap。
+            Map<String, String> sendInfoMap = Collections.emptyMap();
 
-            notifyService.notify(
-                    new NotifyInfo(notifySettingKey, routeInfoDetails, dispatchInfoDetails, sendInfoDetails)
-            );
+            // 调用通知方法。
+            notifyService.notify(new NotifyInfo(notifySettingKey, routeInfoMap, dispatchInfoMap, sendInfoMap));
         } catch (Exception e) {
             LOGGER.warn("发送调度重置消息时发送异常, 消息将不会被发送, 异常信息如下: ", e);
         }
@@ -144,27 +114,17 @@ public class FamilyhelperPusher extends AbstractPusher {
         try {
             LongIdKey notifySettingKey = new LongIdKey(sendResetNotifySettingId);
 
-            // 构造 routeInfoDetails。
-            List<NotifyInfo.InfoDetail> routeInfoDetails = new ArrayList<>();
-            routeInfoDetails.add(new NotifyInfo.InfoDetail(PermissionRouterRegistry.ROUTER_TYPE, StringUtils.EMPTY));
+            // 构造 routeInfoMap。
+            Map<String, String> routeInfoMap = Collections.emptyMap();
 
-            // 构造 dispatchInfoDetails。
-            List<NotifyInfo.InfoDetail> dispatchInfoDetails = new ArrayList<>();
-            dispatchInfoDetails.add(new NotifyInfo.InfoDetail(
-                    EntireDispatcherRegistry.DISPATCHER_TYPE, StringUtils.EMPTY
-            ));
-            dispatchInfoDetails.add(new NotifyInfo.InfoDetail(
-                    GeneralDispatcherRegistry.DISPATCHER_TYPE, StringUtils.EMPTY
-            ));
+            // 构造 dispatchInfoMap。
+            Map<String, String> dispatchInfoMap = Collections.emptyMap();
 
-            // 构造 sendInfoDetails。
-            List<NotifyInfo.InfoDetail> sendInfoDetails = new ArrayList<>();
-            sendInfoDetails.add(new NotifyInfo.InfoDetail(BuiltinSenderRegistry.SENDER_TYPE, StringUtils.EMPTY));
-            sendInfoDetails.add(new NotifyInfo.InfoDetail(EmailSenderRegistry.SENDER_TYPE, StringUtils.EMPTY));
+            // 构造 sendInfoMap。
+            Map<String, String> sendInfoMap = Collections.emptyMap();
 
-            notifyService.notify(
-                    new NotifyInfo(notifySettingKey, routeInfoDetails, dispatchInfoDetails, sendInfoDetails)
-            );
+            // 调用通知方法。
+            notifyService.notify(new NotifyInfo(notifySettingKey, routeInfoMap, dispatchInfoMap, sendInfoMap));
         } catch (Exception e) {
             LOGGER.warn("发送发送重置消息时发送异常, 消息将不会被发送, 异常信息如下: ", e);
         }
