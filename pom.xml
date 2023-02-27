@@ -10,7 +10,7 @@
 
     <groupId>com.dwarfeng</groupId>
     <artifactId>familyhelper-plugin</artifactId>
-    <version>1.1.0.a-SNAPSHOT</version>
+    <version>1.1.0.a</version>
 
     <packaging>pom</packaging>
 
@@ -140,12 +140,12 @@
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>familyhelper-plugin-notify</artifactId>
-                <version>1.1.0.a-SNAPSHOT</version>
+                <version>1.1.0.a</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>familyhelper-plugin-finance</artifactId>
-                <version>1.1.0.a-SNAPSHOT</version>
+                <version>1.1.0.a</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
