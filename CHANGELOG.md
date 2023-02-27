@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 实现 `familyhelper-project` 模块的推送器。
+  - com.dwarfeng.familyhelper.plugin.project.handler.pusher.FamilyhelperPusher。
+
 - 依赖升级。
   - 升级 `notify` 依赖版本为 `1.3.0.a` 并解决兼容性问题，以应用其新功能。
   - 升级 `familyhelper-clannad` 依赖版本为 `1.3.0.a` 并解决兼容性问题，以应用其新功能。

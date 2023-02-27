@@ -33,6 +33,7 @@
         <rbac.version>1.5.0.a</rbac.version>
         <familyhelper-finance.version>1.4.5.a</familyhelper-finance.version>
         <familyhelper-clannad.version>1.3.0.a-SNAPSHOT</familyhelper-clannad.version>
+        <familyhelper-project.version>1.2.0.a-SNAPSHOT</familyhelper-project.version>
         <!-- Maven插件版本声明 -->
         <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
@@ -119,6 +120,22 @@
                 <artifactId>familyhelper-clannad-impl</artifactId>
                 <version>${familyhelper-clannad.version}</version>
             </dependency>
+            <!-- familyhelper-project组件 -->
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>familyhelper-project-stack</artifactId>
+                <version>${familyhelper-project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>familyhelper-project-sdk</artifactId>
+                <version>${familyhelper-project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>familyhelper-project-impl</artifactId>
+                <version>${familyhelper-project.version}</version>
+            </dependency>
             <!-- 程序自身组件 -->
             <dependency>
                 <groupId>com.dwarfeng</groupId>
@@ -169,5 +186,6 @@
         <module>familyhelper-plugin-notify</module>
         <module>familyhelper-plugin-finance</module>
         <module>familyhelper-plugin-clannad</module>
+        <module>familyhelper-plugin-project</module>
     </modules>
 </project>
