@@ -3,8 +3,7 @@ package com.dwarfeng.familyhelper.plugin.project.handler.pusher;
 import com.dwarfeng.familyhelper.plugin.notify.handler.sender.BuiltinSenderRegistry;
 import com.dwarfeng.familyhelper.plugin.notify.handler.sender.EmailSenderRegistry;
 import com.dwarfeng.familyhelper.project.impl.handler.pusher.AbstractPusher;
-import com.dwarfeng.familyhelper.project.sdk.bean.entity.FastJsonMemo;
-import com.dwarfeng.familyhelper.project.sdk.bean.entity.FastJsonMemoRemindDriverInfo;
+import com.dwarfeng.familyhelper.project.sdk.bean.dto.FastJsonMemoRemindInfo;
 import com.dwarfeng.familyhelper.project.stack.bean.dto.MemoRemindInfo;
 import com.dwarfeng.notify.impl.handler.router.IdentityRouterRegistry;
 import com.dwarfeng.notify.stack.bean.dto.NotifyInfo;
@@ -52,10 +51,8 @@ public class FamilyhelperPusher extends AbstractPusher {
     @Value("${pusher.familyhelper.email_sender.placeholder_map_key}")
     private String emailSenderPlaceholderMapKey;
 
-    @Value("${pusher.familyhelper.placeholder_map.entity_key.memo}")
-    private String placeholderMapMemoEntityKey;
-    @Value("${pusher.familyhelper.placeholder_map.entity_key.memo_remind_driver_info}")
-    private String placeholderMapMemoRemindDriverInfoEntityKey;
+    @Value("${pusher.familyhelper.placeholder_map.master_entity_key}")
+    private String placeholderMapMasterEntityKey;
 
     public FamilyhelperPusher(
             @Qualifier("notifyService") NotifyService notifyService,
@@ -90,11 +87,7 @@ public class FamilyhelperPusher extends AbstractPusher {
             // 构造 sendInfoMap。
             Map<String, String> sendInfoMap = new HashMap<>();
             Map<String, Object> placeholderMap = new HashMap<>();
-            placeholderMap.put(placeholderMapMemoEntityKey, FastJsonMemo.of(memoRemindInfo.getMemo()));
-            placeholderMap.put(
-                    placeholderMapMemoRemindDriverInfoEntityKey,
-                    FastJsonMemoRemindDriverInfo.of(memoRemindInfo.getMemoRemindDriverInfo())
-            );
+            placeholderMap.put(placeholderMapMasterEntityKey, FastJsonMemoRemindInfo.of(memoRemindInfo));
             sendInfoMap.put(
                     builtinSenderPlaceholderMapKey, BuiltinSenderRegistry.stringifyPlaceholderMap(placeholderMap)
             );

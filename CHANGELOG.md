@@ -4,7 +4,8 @@
 
 #### 功能构建
 
-- (无)
+- 改进 `familyhelper-project` 模块的推送器。
+  - com.dwarfeng.familyhelper.plugin.project.handler.pusher.FamilyhelperPusher。
 
 #### Bug修复
 
