@@ -2,12 +2,14 @@ package com.dwarfeng.familyhelper.plugin.notify.handler.dispatcher;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
+import com.dwarfeng.notify.impl.handler.dispatcher.AbstractDispatcher;
 import com.dwarfeng.notify.impl.handler.dispatcher.AbstractDispatcherRegistry;
 import com.dwarfeng.notify.stack.exception.DispatcherException;
 import com.dwarfeng.notify.stack.exception.DispatcherExecutionException;
 import com.dwarfeng.notify.stack.exception.DispatcherMakeException;
 import com.dwarfeng.notify.stack.handler.Dispatcher;
 import com.dwarfeng.subgrade.stack.bean.Bean;
+import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -94,7 +96,7 @@ public class GeneralDispatcherRegistry extends AbstractDispatcherRegistry {
 
     @Component
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    public static class GeneralDispatcher implements Dispatcher {
+    public static class GeneralDispatcher extends AbstractDispatcher {
 
         private final Config config;
 
@@ -104,12 +106,12 @@ public class GeneralDispatcherRegistry extends AbstractDispatcherRegistry {
 
         @Override
         public List<StringIdKey> dispatch(
-                Map<String, String> dispatchInfoMap, List<StringIdKey> userKeys, Context context
+                ContextInfo contextInfo, Map<String, String> dispatchInfoMap, List<StringIdKey> userKeys
         ) throws DispatcherException {
             try {
                 List<StringIdKey> result = new ArrayList<>();
                 for (StringIdKey userKey : userKeys) {
-                    if (acceptUser(userKey, dispatchInfoMap, context)) {
+                    if (acceptUser(contextInfo, userKey, dispatchInfoMap)) {
                         result.add(userKey);
                     }
                 }
@@ -123,10 +125,15 @@ public class GeneralDispatcherRegistry extends AbstractDispatcherRegistry {
 
         // 随着判断逻辑的增加，下列警告都将消失。
         @SuppressWarnings({"RedundantIfStatement", "unused"})
-        private boolean acceptUser(StringIdKey userKey, Map<String, String> dispatchInfoMap, Context context)
+        private boolean acceptUser(ContextInfo contextInfo, StringIdKey userKey, Map<String, String> dispatchInfoMap)
                 throws Exception {
+            // 取出 contextInfo 中的字段值。
+            LongIdKey notifySettingKey = contextInfo.getNotifySettingKey();
+            StringIdKey topicKey = contextInfo.getTopicKey();
             // 判断用户是否偏好此主题。
-            String preferredString = context.getMetaOrDefault(userKey, config.getPreferredMetaId());
+            String preferredString = context.getMetaOrDefault(
+                    notifySettingKey, topicKey, userKey, config.getPreferredMetaId()
+            );
             boolean preferred = Boolean.parseBoolean(preferredString);
             if (!preferred) {
                 return false;

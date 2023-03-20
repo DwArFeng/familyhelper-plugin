@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.NotificationCreateInfo;
 import com.dwarfeng.familyhelper.clannad.stack.service.NotificationOperateService;
+import com.dwarfeng.notify.impl.handler.sender.AbstractSender;
 import com.dwarfeng.notify.impl.handler.sender.AbstractSenderRegistry;
 import com.dwarfeng.notify.stack.exception.SenderException;
 import com.dwarfeng.notify.stack.exception.SenderExecutionException;
@@ -142,7 +143,7 @@ public class BuiltinSenderRegistry extends AbstractSenderRegistry {
 
     @Component
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    public static class BuiltinSender implements Sender {
+    public static class BuiltinSender extends AbstractSender {
 
         private static final Logger LOGGER = LoggerFactory.getLogger(BuiltinSender.class);
 
@@ -166,8 +167,9 @@ public class BuiltinSenderRegistry extends AbstractSenderRegistry {
         }
 
         @Override
-        public List<Response> send(Map<String, String> sendInfoMap, List<StringIdKey> userKeys, Context context)
-                throws SenderException {
+        public List<Response> send(
+                ContextInfo contextInfo, Map<String, String> sendInfoMap, List<StringIdKey> userKeys
+        ) throws SenderException {
             try {
                 // 定义结果列表。
                 List<Response> result = new ArrayList<>();
@@ -218,7 +220,7 @@ public class BuiltinSenderRegistry extends AbstractSenderRegistry {
     public static class Config implements Bean {
 
         private static final long serialVersionUID = -7800582757320904399L;
-        
+
         @JSONField(name = "subject_template", ordinal = 1)
         private String subjectTemplate;
 

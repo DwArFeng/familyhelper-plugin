@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Profile;
 import com.dwarfeng.familyhelper.clannad.stack.service.ProfileMaintainService;
+import com.dwarfeng.notify.impl.handler.sender.AbstractSender;
 import com.dwarfeng.notify.impl.handler.sender.AbstractSenderRegistry;
 import com.dwarfeng.notify.stack.exception.SenderException;
 import com.dwarfeng.notify.stack.exception.SenderExecutionException;
@@ -151,7 +152,7 @@ public class EmailSenderRegistry extends AbstractSenderRegistry {
 
     @Component
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    public static class EmailSender implements Sender {
+    public static class EmailSender extends AbstractSender {
 
         private static final Logger LOGGER = LoggerFactory.getLogger(EmailSender.class);
 
@@ -177,7 +178,7 @@ public class EmailSenderRegistry extends AbstractSenderRegistry {
         }
 
         @Override
-        public List<Response> send(Map<String, String> sendInfoMap, List<StringIdKey> userKeys, Context context)
+        public List<Response> send(ContextInfo contextInfo, Map<String, String> sendInfoMap, List<StringIdKey> userKeys)
                 throws SenderException {
             try {
                 // 定义结果。

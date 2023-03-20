@@ -2,6 +2,7 @@ package com.dwarfeng.familyhelper.plugin.notify.handler.router;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
+import com.dwarfeng.notify.impl.handler.router.AbstractRouter;
 import com.dwarfeng.notify.impl.handler.router.AbstractRouterRegistry;
 import com.dwarfeng.notify.stack.exception.RouterException;
 import com.dwarfeng.notify.stack.exception.RouterExecutionException;
@@ -140,7 +141,7 @@ public class PermissionRouterRegistry extends AbstractRouterRegistry {
 
     @Component
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    public static class PermissionRouter implements Router {
+    public static class PermissionRouter extends AbstractRouter {
 
         private final UserLookupService userLookupService;
 
@@ -152,7 +153,7 @@ public class PermissionRouterRegistry extends AbstractRouterRegistry {
         }
 
         @Override
-        public List<StringIdKey> route(Map<String, String> routeInfoMap, Context context) throws RouterException {
+        public List<StringIdKey> route(ContextInfo contextInfo, Map<String, String> routeInfoMap) throws RouterException {
             try {
                 // 获取权限节点主键。
                 StringIdKey permissionKey = new StringIdKey(config.getPermissionId());
@@ -194,7 +195,7 @@ public class PermissionRouterRegistry extends AbstractRouterRegistry {
     public static class Config implements Bean {
 
         private static final long serialVersionUID = 6100979168538870041L;
-        
+
         @JSONField(name = "permission_id", ordinal = 1)
         private String permissionId;
 
