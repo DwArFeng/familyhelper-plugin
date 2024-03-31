@@ -19,7 +19,7 @@
 
     <properties>
         <!-- 进行工程编码声明 -->
-        <!-- 进行JDK版本声明 -->
+        <!-- 进行 JDK 版本声明 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -34,7 +34,7 @@
         <familyhelper-finance.version>1.4.5.a</familyhelper-finance.version>
         <familyhelper-clannad.version>1.3.0.a</familyhelper-clannad.version>
         <familyhelper-project.version>1.2.1.a</familyhelper-project.version>
-        <!-- Maven插件版本声明 -->
+        <!-- Maven 插件版本声明 -->
         <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
@@ -66,7 +66,7 @@
                 <artifactId>javax.mail</artifactId>
                 <version>${javax.mail.version}</version>
             </dependency>
-            <!-- notify组件 -->
+            <!-- Notify 组件 -->
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>notify-stack</artifactId>
@@ -82,13 +82,13 @@
                 <artifactId>notify-impl</artifactId>
                 <version>${notify.version}</version>
             </dependency>
-            <!-- rbac组件 -->
+            <!-- Rbac 组件 -->
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>rbac-distributed-service-stack</artifactId>
                 <version>${rbac.version}</version>
             </dependency>
-            <!-- familyhelper-finance组件 -->
+            <!-- Familyhelper-finance 组件 -->
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>familyhelper-finance-stack</artifactId>
@@ -104,7 +104,7 @@
                 <artifactId>familyhelper-finance-impl</artifactId>
                 <version>${familyhelper-finance.version}</version>
             </dependency>
-            <!-- familyhelper-clannad组件 -->
+            <!-- Familyhelper-clannad 组件 -->
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>familyhelper-clannad-stack</artifactId>
@@ -120,7 +120,7 @@
                 <artifactId>familyhelper-clannad-impl</artifactId>
                 <version>${familyhelper-clannad.version}</version>
             </dependency>
-            <!-- familyhelper-project组件 -->
+            <!-- Familyhelper-project 组件 -->
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>familyhelper-project-stack</artifactId>
@@ -145,6 +145,16 @@
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>familyhelper-plugin-finance</artifactId>
+                <version>1.4.0.a-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>familyhelper-plugin-clannad</artifactId>
+                <version>1.4.0.a-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>familyhelper-plugin-project</artifactId>
                 <version>1.4.0.a-SNAPSHOT</version>
             </dependency>
         </dependencies>

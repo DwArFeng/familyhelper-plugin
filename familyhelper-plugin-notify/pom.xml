@@ -20,7 +20,7 @@
 
     <properties>
         <!-- 进行工程编码声明 -->
-        <!-- 进行JDK版本声明 -->
+        <!-- 进行 JDK 版本声明 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -33,7 +33,7 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- Spring框架 -->
+        <!-- Spring 框架 -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
@@ -44,7 +44,7 @@
             <groupId>com.sun.mail</groupId>
             <artifactId>javax.mail</artifactId>
         </dependency>
-        <!-- notify组件 -->
+        <!-- Notify 组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>notify-stack</artifactId>
@@ -57,12 +57,12 @@
             <groupId>com.dwarfeng</groupId>
             <artifactId>notify-impl</artifactId>
         </dependency>
-        <!-- rbac组件 -->
+        <!-- Rbac 组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>rbac-distributed-service-stack</artifactId>
         </dependency>
-        <!-- familyhelper-clannad组件 -->
+        <!-- Familyhelper-clannad 组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>familyhelper-clannad-stack</artifactId>
