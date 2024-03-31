@@ -27,7 +27,7 @@
         <!-- 进行版本声明 -->
         <!-- 集中定义依赖版本号 -->
         <junit.version>4.13.2</junit.version>
-        <spring.version>5.3.20</spring.version>
+        <spring.version>5.3.31</spring.version>
         <javax.mail.version>1.6.2</javax.mail.version>
         <notify.version>1.4.0.a</notify.version>
         <rbac.version>1.5.0.a</rbac.version>
