@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 实现 `familyhelper-assets` 模块的服务。
+  - com.dwarfeng.familyhelper.plugin.assets.service.DubboRestItemFileOperateService。
+
 - 依赖升级。
   - 升级 `spring` 依赖版本为 `5.3.31` 以规避漏洞。
 

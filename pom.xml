@@ -29,11 +29,15 @@
         <junit.version>4.13.2</junit.version>
         <spring.version>5.3.31</spring.version>
         <javax.mail.version>1.6.2</javax.mail.version>
+        <javax.ws.rs.version>2.1.1</javax.ws.rs.version>
+        <resteasy.version>3.15.6.Final</resteasy.version>
         <notify.version>1.4.0.a</notify.version>
         <rbac.version>1.5.0.a</rbac.version>
+        <voucher.version>beta-1.0.0.a</voucher.version>
         <familyhelper-finance.version>1.4.5.a</familyhelper-finance.version>
         <familyhelper-clannad.version>1.3.0.a</familyhelper-clannad.version>
         <familyhelper-project.version>1.2.1.a</familyhelper-project.version>
+        <familyhelper-assets.version>1.0.8.a</familyhelper-assets.version>
         <!-- Maven 插件版本声明 -->
         <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
@@ -66,6 +70,23 @@
                 <artifactId>javax.mail</artifactId>
                 <version>${javax.mail.version}</version>
             </dependency>
+            <!-- Javax restful 工具 -->
+            <dependency>
+                <groupId>javax.ws.rs</groupId>
+                <artifactId>javax.ws.rs-api</artifactId>
+                <version>${javax.ws.rs.version}</version>
+            </dependency>
+            <!-- RestEasy 框架 -->
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-client</artifactId>
+                <version>${resteasy.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-multipart-provider</artifactId>
+                <version>${resteasy.version}</version>
+            </dependency>
             <!-- Notify 组件 -->
             <dependency>
                 <groupId>com.dwarfeng</groupId>
@@ -87,6 +108,12 @@
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>rbac-distributed-service-stack</artifactId>
                 <version>${rbac.version}</version>
+            </dependency>
+            <!-- Voucher 组件 -->
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>voucher-stack</artifactId>
+                <version>${voucher.version}</version>
             </dependency>
             <!-- Familyhelper-finance 组件 -->
             <dependency>
@@ -136,6 +163,22 @@
                 <artifactId>familyhelper-project-impl</artifactId>
                 <version>${familyhelper-project.version}</version>
             </dependency>
+            <!-- Familyhelper-assets 组件 -->
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>familyhelper-assets-stack</artifactId>
+                <version>${familyhelper-assets.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>familyhelper-assets-sdk</artifactId>
+                <version>${familyhelper-assets.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>familyhelper-assets-impl</artifactId>
+                <version>${familyhelper-assets.version}</version>
+            </dependency>
             <!-- 程序自身组件 -->
             <dependency>
                 <groupId>com.dwarfeng</groupId>
@@ -155,6 +198,11 @@
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>familyhelper-plugin-project</artifactId>
+                <version>1.4.0.a-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>familyhelper-plugin-assets</artifactId>
                 <version>1.4.0.a-SNAPSHOT</version>
             </dependency>
         </dependencies>
@@ -197,5 +245,6 @@
         <module>familyhelper-plugin-finance</module>
         <module>familyhelper-plugin-clannad</module>
         <module>familyhelper-plugin-project</module>
+        <module>familyhelper-plugin-assets</module>
     </modules>
 </project>
