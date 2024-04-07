@@ -42,6 +42,7 @@ public class DubboRestItemFileOperateHandlerImpl implements DubboRestItemFileOpe
     @Value(SPEL_VOUCHER_CATEGORY_KEY)
     private StringIdKey voucherCategoryKey;
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     public DubboRestItemFileOperateHandlerImpl(
             ItemFileInfoMaintainService itemFileInfoMaintainService,
             VoucherService voucherService,

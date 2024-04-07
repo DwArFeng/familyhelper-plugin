@@ -39,6 +39,7 @@ public class FamilyhelperPusher extends AbstractPusher {
     @Value("${pusher.familyhelper.notify_setting_id.send_reset}")
     private long sendResetNotifySettingId;
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     public FamilyhelperPusher(
             @Qualifier("notifyService") NotifyService notifyService,
             ThreadPoolTaskExecutor executor

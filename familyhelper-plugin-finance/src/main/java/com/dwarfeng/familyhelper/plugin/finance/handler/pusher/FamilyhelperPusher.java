@@ -56,6 +56,7 @@ public class FamilyhelperPusher extends AbstractPusher {
     @Value("${pusher.familyhelper.placeholder_map.master_entity_key}")
     private String placeholderMapMasterEntityKey;
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     public FamilyhelperPusher(
             @Qualifier("notifyService") NotifyService notifyService,
             ThreadPoolTaskExecutor executor
@@ -70,7 +71,6 @@ public class FamilyhelperPusher extends AbstractPusher {
         executor.submit(() -> internalRemindHappened(remindInfo));
     }
 
-    @SuppressWarnings("DuplicatedCode")
     private void internalRemindHappened(RemindInfo remindInfo) {
         try {
             LongIdKey notifySettingKey = new LongIdKey(remindHappenedNotifySettingId);
