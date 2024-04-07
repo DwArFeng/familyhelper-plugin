@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 优化打包输出的项目结构。
+  - 子模块打包时，在输出的项目结构的根目录中增加 `LICENSE` 文件。
+
 - 实现 `familyhelper-assets` 模块的服务。
   - com.dwarfeng.familyhelper.plugin.assets.service.DubboRestItemFileOperateService。
 
