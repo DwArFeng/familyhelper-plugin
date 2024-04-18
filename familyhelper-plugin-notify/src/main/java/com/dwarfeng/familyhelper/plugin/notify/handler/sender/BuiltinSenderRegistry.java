@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.NotificationCreateInfo;
 import com.dwarfeng.familyhelper.clannad.stack.service.NotificationOperateService;
+import com.dwarfeng.familyhelper.plugin.commons.util.NotifyUtil;
 import com.dwarfeng.notify.impl.handler.sender.AbstractSender;
 import com.dwarfeng.notify.impl.handler.sender.AbstractSenderRegistry;
 import com.dwarfeng.notify.stack.exception.SenderException;
@@ -66,7 +67,7 @@ public class BuiltinSenderRegistry extends AbstractSenderRegistry {
      * @return 指定的占位符映射转换成的字符串。
      */
     public static String stringifyPlaceholderMap(Map<String, Object> placeholderMap) {
-        return JSON.toJSONString(placeholderMap, false);
+        return NotifyUtil.stringifyBuiltinSenderPlaceholderMap(placeholderMap);
     }
 
     /**

@@ -1,7 +1,6 @@
 package com.dwarfeng.familyhelper.plugin.project.handler.pusher;
 
-import com.dwarfeng.familyhelper.plugin.notify.handler.sender.BuiltinSenderRegistry;
-import com.dwarfeng.familyhelper.plugin.notify.handler.sender.EmailSenderRegistry;
+import com.dwarfeng.familyhelper.plugin.commons.util.NotifyUtil;
 import com.dwarfeng.familyhelper.project.impl.handler.pusher.AbstractPusher;
 import com.dwarfeng.familyhelper.project.sdk.bean.dto.FastJsonMemoRemindInfo;
 import com.dwarfeng.familyhelper.project.stack.bean.dto.MemoRemindInfo;
@@ -89,9 +88,11 @@ public class FamilyhelperPusher extends AbstractPusher {
             Map<String, Object> placeholderMap = new HashMap<>();
             placeholderMap.put(placeholderMapMasterEntityKey, FastJsonMemoRemindInfo.of(memoRemindInfo));
             sendInfoMap.put(
-                    builtinSenderPlaceholderMapKey, BuiltinSenderRegistry.stringifyPlaceholderMap(placeholderMap)
+                    builtinSenderPlaceholderMapKey, NotifyUtil.stringifyBuiltinSenderPlaceholderMap(placeholderMap)
             );
-            sendInfoMap.put(emailSenderPlaceholderMapKey, EmailSenderRegistry.stringifyPlaceholderMap(placeholderMap));
+            sendInfoMap.put(
+                    emailSenderPlaceholderMapKey, NotifyUtil.stringifyEmailSenderPlaceholderMap(placeholderMap)
+            );
 
             // 调用通知方法。
             notifyService.notify(new NotifyInfo(notifySettingKey, routeInfoMap, dispatchInfoMap, sendInfoMap));
@@ -105,7 +106,6 @@ public class FamilyhelperPusher extends AbstractPusher {
         executor.submit(this::internalMemoRemindDriveReset);
     }
 
-    @SuppressWarnings("DuplicatedCode")
     private void internalMemoRemindDriveReset() {
         try {
             LongIdKey notifySettingKey = new LongIdKey(memoRemindDriveResetNotifySettingId);

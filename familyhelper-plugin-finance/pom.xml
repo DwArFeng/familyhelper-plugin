@@ -66,7 +66,7 @@
         <!-- 程序自身组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
-            <artifactId>familyhelper-plugin-notify</artifactId>
+            <artifactId>familyhelper-plugin-commons</artifactId>
         </dependency>
     </dependencies>
 

@@ -1,4 +1,4 @@
-package com.dwarfeng.familyhelper.plugin.assets.bean.dto;
+package com.dwarfeng.familyhelper.plugin.commons.dto;
 
 import com.dwarfeng.subgrade.stack.bean.dto.Dto;
 import org.jboss.resteasy.annotations.jaxrs.FormParam;
@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
  */
 public class VoucherIdWrapper implements Dto {
 
-    private static final long serialVersionUID = 1844921359119691612L;
+    private static final long serialVersionUID = -6390138555511578640L;
 
     @FormParam("voucher-id")
     @PartType(MediaType.TEXT_PLAIN)

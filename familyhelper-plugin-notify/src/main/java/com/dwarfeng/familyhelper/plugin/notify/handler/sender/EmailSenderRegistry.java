@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Profile;
 import com.dwarfeng.familyhelper.clannad.stack.service.ProfileMaintainService;
+import com.dwarfeng.familyhelper.plugin.commons.util.NotifyUtil;
 import com.dwarfeng.notify.impl.handler.sender.AbstractSender;
 import com.dwarfeng.notify.impl.handler.sender.AbstractSenderRegistry;
 import com.dwarfeng.notify.stack.exception.SenderException;
@@ -71,7 +72,7 @@ public class EmailSenderRegistry extends AbstractSenderRegistry {
      * @return 指定的占位符映射转换成的字符串。
      */
     public static String stringifyPlaceholderMap(Map<String, Object> placeholderMap) {
-        return JSON.toJSONString(placeholderMap, false);
+        return NotifyUtil.stringifyEmailSenderPlaceholderMap(placeholderMap);
     }
 
     /**

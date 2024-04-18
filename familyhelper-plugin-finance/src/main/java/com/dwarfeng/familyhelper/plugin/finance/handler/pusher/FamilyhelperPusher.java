@@ -4,8 +4,7 @@ import com.dwarfeng.familyhelper.finance.impl.handler.pusher.AbstractPusher;
 import com.dwarfeng.familyhelper.finance.sdk.bean.entity.FastJsonAccountBook;
 import com.dwarfeng.familyhelper.finance.stack.bean.dto.RemindInfo;
 import com.dwarfeng.familyhelper.finance.stack.bean.entity.User;
-import com.dwarfeng.familyhelper.plugin.notify.handler.sender.BuiltinSenderRegistry;
-import com.dwarfeng.familyhelper.plugin.notify.handler.sender.EmailSenderRegistry;
+import com.dwarfeng.familyhelper.plugin.commons.util.NotifyUtil;
 import com.dwarfeng.notify.impl.handler.router.IdentityRouterRegistry;
 import com.dwarfeng.notify.stack.bean.dto.NotifyInfo;
 import com.dwarfeng.notify.stack.service.NotifyService;
@@ -92,9 +91,11 @@ public class FamilyhelperPusher extends AbstractPusher {
             Map<String, Object> placeholderMap = new HashMap<>();
             placeholderMap.put(placeholderMapMasterEntityKey, FastJsonAccountBook.of(remindInfo.getAccountBook()));
             sendInfoMap.put(
-                    builtinSenderPlaceholderMapKey, BuiltinSenderRegistry.stringifyPlaceholderMap(placeholderMap)
+                    builtinSenderPlaceholderMapKey, NotifyUtil.stringifyBuiltinSenderPlaceholderMap(placeholderMap)
             );
-            sendInfoMap.put(emailSenderPlaceholderMapKey, EmailSenderRegistry.stringifyPlaceholderMap(placeholderMap));
+            sendInfoMap.put(
+                    emailSenderPlaceholderMapKey, NotifyUtil.stringifyEmailSenderPlaceholderMap(placeholderMap)
+            );
 
             // 调用通知方法。
             notifyService.notify(new NotifyInfo(notifySettingKey, routeInfoMap, dispatchInfoMap, sendInfoMap));
@@ -108,7 +109,6 @@ public class FamilyhelperPusher extends AbstractPusher {
         executor.submit(this::internalRemindDriveReset);
     }
 
-    @SuppressWarnings("DuplicatedCode")
     private void internalRemindDriveReset() {
         try {
             LongIdKey notifySettingKey = new LongIdKey(remindDriveResetNotifySettingId);

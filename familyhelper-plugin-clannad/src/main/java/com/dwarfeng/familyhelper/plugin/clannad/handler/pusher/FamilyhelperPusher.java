@@ -3,8 +3,7 @@ package com.dwarfeng.familyhelper.plugin.clannad.handler.pusher;
 import com.dwarfeng.familyhelper.clannad.impl.handler.pusher.AbstractPusher;
 import com.dwarfeng.familyhelper.clannad.sdk.bean.dto.FastJsonBirthdayBlessInfo;
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.BirthdayBlessInfo;
-import com.dwarfeng.familyhelper.plugin.notify.handler.sender.BuiltinSenderRegistry;
-import com.dwarfeng.familyhelper.plugin.notify.handler.sender.EmailSenderRegistry;
+import com.dwarfeng.familyhelper.plugin.commons.util.NotifyUtil;
 import com.dwarfeng.notify.impl.handler.router.IdentityRouterRegistry;
 import com.dwarfeng.notify.stack.bean.dto.NotifyInfo;
 import com.dwarfeng.notify.stack.service.NotifyService;
@@ -94,9 +93,11 @@ public class FamilyhelperPusher extends AbstractPusher {
             Map<String, Object> placeholderMap = new HashMap<>();
             placeholderMap.put(placeholderMapMasterEntityKey, FastJsonBirthdayBlessInfo.of(birthdayBlessInfo));
             sendInfoMap.put(
-                    builtinSenderPlaceholderMapKey, BuiltinSenderRegistry.stringifyPlaceholderMap(placeholderMap)
+                    builtinSenderPlaceholderMapKey, NotifyUtil.stringifyBuiltinSenderPlaceholderMap(placeholderMap)
             );
-            sendInfoMap.put(emailSenderPlaceholderMapKey, EmailSenderRegistry.stringifyPlaceholderMap(placeholderMap));
+            sendInfoMap.put(
+                    emailSenderPlaceholderMapKey, NotifyUtil.stringifyEmailSenderPlaceholderMap(placeholderMap)
+            );
 
             // 调用通知方法。
             notifyService.notify(new NotifyInfo(notifySettingKey, routeInfoMap, dispatchInfoMap, sendInfoMap));

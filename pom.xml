@@ -31,6 +31,8 @@
         <javax.mail.version>1.6.2</javax.mail.version>
         <javax.ws.rs.version>2.1.1</javax.ws.rs.version>
         <resteasy.version>3.15.6.Final</resteasy.version>
+        <fastjson.version>1.2.83</fastjson.version>
+        <subgrade.version>1.5.2.a</subgrade.version>
         <notify.version>1.4.0.a</notify.version>
         <rbac.version>1.5.0.a</rbac.version>
         <voucher.version>beta-1.0.0.a</voucher.version>
@@ -86,6 +88,18 @@
                 <groupId>org.jboss.resteasy</groupId>
                 <artifactId>resteasy-multipart-provider</artifactId>
                 <version>${resteasy.version}</version>
+            </dependency>
+            <!-- FastJson 组件 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <!-- Subgrade 组件 -->
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>subgrade-stack</artifactId>
+                <version>${subgrade.version}</version>
             </dependency>
             <!-- Notify 组件 -->
             <dependency>
@@ -182,6 +196,11 @@
             <!-- 程序自身组件 -->
             <dependency>
                 <groupId>com.dwarfeng</groupId>
+                <artifactId>familyhelper-plugin-commons</artifactId>
+                <version>1.5.0.a-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
                 <artifactId>familyhelper-plugin-notify</artifactId>
                 <version>1.5.0.a-SNAPSHOT</version>
             </dependency>
@@ -241,6 +260,7 @@
     </build>
 
     <modules>
+        <module>familyhelper-plugin-commons</module>
         <module>familyhelper-plugin-notify</module>
         <module>familyhelper-plugin-finance</module>
         <module>familyhelper-plugin-clannad</module>

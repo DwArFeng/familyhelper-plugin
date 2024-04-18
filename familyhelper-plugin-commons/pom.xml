@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <project
         xmlns="http://maven.apache.org/POM/4.0.0"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-        http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         http://maven.apache.org/xsd/maven-4.0.0.xsd"
 >
     <modelVersion>4.0.0</modelVersion>
 
@@ -13,8 +14,8 @@
         <version>1.5.0.a-SNAPSHOT</version>
     </parent>
 
-    <artifactId>familyhelper-plugin-project</artifactId>
-    <name>familyhelper-plugin-project</name>
+    <artifactId>familyhelper-plugin-commons</artifactId>
+    <name>familyhelper-plugin-commons</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -32,41 +33,29 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- Spring 框架 -->
+        <!-- Javax restful 工具 -->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>javax.ws.rs-api</artifactId>
         </dependency>
-        <!-- Familyhelper-project 组件 -->
+        <!-- RestEasy 框架 -->
         <dependency>
-            <groupId>com.dwarfeng</groupId>
-            <artifactId>familyhelper-project-stack</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.dwarfeng</groupId>
-            <artifactId>familyhelper-project-sdk</artifactId>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-client</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.dwarfeng</groupId>
-            <artifactId>familyhelper-project-impl</artifactId>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-multipart-provider</artifactId>
         </dependency>
-        <!-- Notify 组件 -->
+        <!-- FastJson 组件 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+        <!-- Subgrade 组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
-            <artifactId>notify-stack</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.dwarfeng</groupId>
-            <artifactId>notify-sdk</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.dwarfeng</groupId>
-            <artifactId>notify-impl</artifactId>
-        </dependency>
-        <!-- 程序自身组件 -->
-        <dependency>
-            <groupId>com.dwarfeng</groupId>
-            <artifactId>familyhelper-plugin-commons</artifactId>
+            <artifactId>subgrade-stack</artifactId>
         </dependency>
     </dependencies>
 
@@ -91,27 +80,6 @@
                 <configuration>
                     <skip>true</skip>
                 </configuration>
-            </plugin>
-            <!-- Maven 装配插件，用于装配项目文件。 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>single</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <descriptors>
-                                <descriptor>src/assembly/assembly.xml</descriptor>
-                            </descriptors>
-                            <tarLongFileMode>gnu</tarLongFileMode>
-                            <attach>false</attach>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
         <!-- 配置资源目录 -->

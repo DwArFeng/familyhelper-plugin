@@ -67,6 +67,11 @@
             <groupId>com.dwarfeng</groupId>
             <artifactId>familyhelper-clannad-stack</artifactId>
         </dependency>
+        <!-- 程序自身组件 -->
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>familyhelper-plugin-commons</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
