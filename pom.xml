@@ -10,7 +10,7 @@
 
     <groupId>com.dwarfeng</groupId>
     <artifactId>familyhelper-plugin</artifactId>
-    <version>1.4.0.a</version>
+    <version>1.5.0.a-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
@@ -183,27 +183,27 @@
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>familyhelper-plugin-notify</artifactId>
-                <version>1.4.0.a</version>
+                <version>1.5.0.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>familyhelper-plugin-finance</artifactId>
-                <version>1.4.0.a</version>
+                <version>1.5.0.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>familyhelper-plugin-clannad</artifactId>
-                <version>1.4.0.a</version>
+                <version>1.5.0.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>familyhelper-plugin-project</artifactId>
-                <version>1.4.0.a</version>
+                <version>1.5.0.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>familyhelper-plugin-assets</artifactId>
-                <version>1.4.0.a</version>
+                <version>1.5.0.a-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
