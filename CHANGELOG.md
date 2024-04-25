@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 实现 `familyhelper-clannad` 模块的服务。
+  - com.dwarfeng.familyhelper.plugin.clannad.service.DubboRestCertificateFileOperateService。
+
 - 依赖升级。
   - 升级 `familyhelper-clannad` 依赖版本为 `1.4.1.a` 以应用其新功能。
 

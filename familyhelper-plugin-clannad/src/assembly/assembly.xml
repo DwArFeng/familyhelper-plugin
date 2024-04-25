@@ -18,6 +18,15 @@
             <includes>
                 <include>com.dwarfeng:familyhelper-plugin*</include>
                 <include>com.dwarfeng:notify*</include>
+                <include>javax.ws.rs:*</include>
+                <include>org.jboss.resteasy:*</include>
+                <include>org.apache.httpcomponents:*</include>
+                <include>org.reactivestreams:*</include>
+                <include>org.jboss.spec.javax.annotation:*</include>
+                <include>com.sun.mail:*</include>
+                <include>org.apache.james:*</include>
+                <include>commons-io:*</include>
+                <include>com.dwarfeng:voucher*</include>
             </includes>
         </dependencySet>
     </dependencySets>
@@ -28,6 +37,7 @@
             <directory>src/main/resources/confext</directory>
             <includes>
                 <include>*.properties</include>
+                <include>*.xml</include>
             </includes>
             <fileMode>0644</fileMode>
         </fileSet>

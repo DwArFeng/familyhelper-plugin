@@ -63,6 +63,11 @@
             <groupId>com.dwarfeng</groupId>
             <artifactId>notify-impl</artifactId>
         </dependency>
+        <!-- Voucher 组件 -->
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>voucher-stack</artifactId>
+        </dependency>
         <!-- 程序自身组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
