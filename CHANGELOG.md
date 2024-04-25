@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 依赖升级。
+  - 升级 `familyhelper-clannad` 依赖版本为 `1.4.1.a` 以应用其新功能。
+
 - 优化 `opt-plugin-familyhelper.xml`。
   - 优化部分 `dubbo:reference` 的配置格式。
   - 为 `dubbo:reference` 增加 `check="false"` 配置项，以确保没有服务提供者时程序能够正常启动。
