@@ -33,6 +33,9 @@
     <dubbo:reference
             id="voucherService"
             interface="com.dwarfeng.voucher.stack.service.VoucherService"
+            retries="3"
+            timeout="60000"
+            check="false"
             group="${dubbo.consumer.voucher.group}"
     />
 </beans>

@@ -4,6 +4,13 @@
 
 #### 功能构建
 
+- 优化 `opt-plugin-familyhelper.xml`。
+  - 优化部分 `dubbo:reference` 的配置格式。
+  - 为 `dubbo:reference` 增加 `check="false"` 配置项，以确保没有服务提供者时程序能够正常启动。
+  - 为 `dubbo:reference` 增加 `timeout="60000"` 配置项，显示指定超时时间。
+  - 为 `dubbo:reference` 增加 `retries="3"` 配置项，显示指定重试次数。
+  - 为 `dubbo:reference` 增加消费者分组配置项。
+
 - 优化项目结构。
   - 新增模块 `familyhelper-plugin-commons`，用于提供插件的通用功能。
   - 项目中任何其它的模块都依赖此模块，而不是互相依赖其它项目模块。

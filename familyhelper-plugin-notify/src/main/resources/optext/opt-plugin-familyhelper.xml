@@ -26,30 +26,34 @@
     <dubbo:reference
             id="userLookupService"
             interface="com.dwarfeng.rbacds.stack.service.UserLookupService"
-            check="false"
-            timeout="60000"
             retries="3"
+            timeout="60000"
+            check="false"
+            group="${dubbo.consumer.rbac.group}"
     />
     <dubbo:reference
             id="notificationOperateService"
             interface="com.dwarfeng.familyhelper.clannad.stack.service.NotificationOperateService"
-            check="false"
-            timeout="60000"
             retries="3"
+            timeout="60000"
+            check="false"
+            group="${dubbo.consumer.familyhelper_clannad.group}"
     />
     <dubbo:reference
             id="profileMaintainService"
             interface="com.dwarfeng.familyhelper.clannad.stack.service.ProfileMaintainService"
-            check="false"
-            timeout="60000"
             retries="3"
+            timeout="60000"
+            check="false"
+            group="${dubbo.consumer.familyhelper_clannad.group}"
     />
     <dubbo:reference
             id="notifyService"
             interface="com.dwarfeng.notify.stack.service.NotifyService"
-            check="false"
-            timeout="60000"
             retries="3"
+            timeout="60000"
+            check="false"
+            group="${dubbo.consumer.notify.group}"
     />
 
     <!-- 注册表达式解析器以及对应的上下文 -->
