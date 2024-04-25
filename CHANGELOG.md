@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 实现 `familyhelper-life` 模块的服务。
+  - com.dwarfeng.familyhelper.plugin.life.service.DubboRestActivityFileOperateService。
+
 - 实现 `familyhelper-clannad` 模块的服务。
   - com.dwarfeng.familyhelper.plugin.clannad.service.DubboRestCertificateFileOperateService。
 
