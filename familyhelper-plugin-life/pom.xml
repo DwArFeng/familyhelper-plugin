@@ -51,10 +51,36 @@
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-multipart-provider</artifactId>
         </dependency>
+        <!-- Subgrade 组件 -->
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>subgrade-stack</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>subgrade-sdk</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>subgrade-impl</artifactId>
+        </dependency>
         <!-- Voucher 组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>voucher-stack</artifactId>
+        </dependency>
+        <!-- Notify 组件 -->
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>notify-stack</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>notify-sdk</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>notify-impl</artifactId>
         </dependency>
         <!-- Familyhelper-life 组件 -->
         <dependency>

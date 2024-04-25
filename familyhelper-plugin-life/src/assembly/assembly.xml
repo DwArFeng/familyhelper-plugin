@@ -26,6 +26,7 @@
                 <include>org.apache.james:*</include>
                 <include>commons-io:*</include>
                 <include>com.dwarfeng:voucher*</include>
+                <include>com.dwarfeng:notify*</include>
             </includes>
         </dependencySet>
     </dependencySets>

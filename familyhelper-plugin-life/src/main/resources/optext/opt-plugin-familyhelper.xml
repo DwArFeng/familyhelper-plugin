@@ -18,6 +18,9 @@
     <!--扫描 handler 包。 -->
     <context:component-scan base-package="com.dwarfeng.familyhelper.plugin.life.handler"/>
 
+    <!--扫描 pusher 的实现包。 -->
+    <context:component-scan base-package="com.dwarfeng.familyhelper.plugin.life.handler.pusher"/>
+
     <!-- dubbo rest 协议 -->
     <dubbo:protocol name="rest" port="${dubbo.protocol.rest.port}" server="jetty"/>
 
@@ -30,6 +33,15 @@
     />
 
     <!-- 向注册中心注册暴露服务地址,注册消费者服务 -->
+    <dubbo:reference
+            id="notifyService"
+            interface="com.dwarfeng.notify.stack.service.NotifyService"
+            retries="3"
+            timeout="60000"
+            check="false"
+            group="${dubbo.consumer.notify.group}"
+    />
+
     <dubbo:reference
             id="voucherService"
             interface="com.dwarfeng.voucher.stack.service.VoucherService"

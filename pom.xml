@@ -102,6 +102,16 @@
                 <artifactId>subgrade-stack</artifactId>
                 <version>${subgrade.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>subgrade-sdk</artifactId>
+                <version>${subgrade.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>subgrade-impl</artifactId>
+                <version>${subgrade.version}</version>
+            </dependency>
             <!-- Notify 组件 -->
             <dependency>
                 <groupId>com.dwarfeng</groupId>
