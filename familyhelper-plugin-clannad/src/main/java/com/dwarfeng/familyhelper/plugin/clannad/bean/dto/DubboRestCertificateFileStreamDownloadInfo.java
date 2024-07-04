@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
  */
 public class DubboRestCertificateFileStreamDownloadInfo implements Dto {
 
-    private static final long serialVersionUID = 1154714793938938067L;
+    private static final long serialVersionUID = 7475499683848455566L;
 
     @FormParam("user-string-id")
     @PartType("text/plain;charset=utf-8")
@@ -22,14 +22,14 @@ public class DubboRestCertificateFileStreamDownloadInfo implements Dto {
 
     @FormParam("Certificate-file-long-id")
     @PartType(MediaType.TEXT_PLAIN)
-    private Long CertificateFileLongId;
+    private Long certificateFileLongId;
 
     public DubboRestCertificateFileStreamDownloadInfo() {
     }
 
-    public DubboRestCertificateFileStreamDownloadInfo(String userStringId, Long CertificateFileLongId) {
+    public DubboRestCertificateFileStreamDownloadInfo(String userStringId, Long certificateFileLongId) {
         this.userStringId = userStringId;
-        this.CertificateFileLongId = CertificateFileLongId;
+        this.certificateFileLongId = certificateFileLongId;
     }
 
     public String getUserStringId() {
@@ -41,18 +41,18 @@ public class DubboRestCertificateFileStreamDownloadInfo implements Dto {
     }
 
     public Long getCertificateFileLongId() {
-        return CertificateFileLongId;
+        return certificateFileLongId;
     }
 
-    public void setCertificateFileLongId(Long CertificateFileLongId) {
-        this.CertificateFileLongId = CertificateFileLongId;
+    public void setCertificateFileLongId(Long certificateFileLongId) {
+        this.certificateFileLongId = certificateFileLongId;
     }
 
     @Override
     public String toString() {
         return "DubboRestCertificateFileStreamDownloadInfo{" +
                 "userStringId='" + userStringId + '\'' +
-                ", CertificateFileLongId=" + CertificateFileLongId +
+                ", certificateFileLongId=" + certificateFileLongId +
                 '}';
     }
 }

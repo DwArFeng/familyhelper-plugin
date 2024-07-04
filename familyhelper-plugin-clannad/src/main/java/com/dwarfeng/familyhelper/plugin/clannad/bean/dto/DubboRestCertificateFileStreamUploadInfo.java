@@ -15,7 +15,7 @@ import java.io.InputStream;
  */
 public class DubboRestCertificateFileStreamUploadInfo implements Dto {
 
-    private static final long serialVersionUID = -4879016673506339281L;
+    private static final long serialVersionUID = -5537247248852402565L;
 
     @FormParam("user-string-id")
     @PartType("text/plain;charset=utf-8")
@@ -23,7 +23,7 @@ public class DubboRestCertificateFileStreamUploadInfo implements Dto {
 
     @FormParam("Certificate-long-id")
     @PartType(MediaType.TEXT_PLAIN)
-    private Long CertificateLongId;
+    private Long certificateLongId;
 
     @FormParam("origin-name")
     @PartType("text/plain;charset=utf-8")
@@ -41,10 +41,10 @@ public class DubboRestCertificateFileStreamUploadInfo implements Dto {
     }
 
     public DubboRestCertificateFileStreamUploadInfo(
-            String userStringId, Long CertificateLongId, String originName, long length, InputStream content
+            String userStringId, Long certificateLongId, String originName, long length, InputStream content
     ) {
         this.userStringId = userStringId;
-        this.CertificateLongId = CertificateLongId;
+        this.certificateLongId = certificateLongId;
         this.originName = originName;
         this.length = length;
         this.content = content;
@@ -59,11 +59,11 @@ public class DubboRestCertificateFileStreamUploadInfo implements Dto {
     }
 
     public Long getCertificateLongId() {
-        return CertificateLongId;
+        return certificateLongId;
     }
 
-    public void setCertificateLongId(Long CertificateLongId) {
-        this.CertificateLongId = CertificateLongId;
+    public void setCertificateLongId(Long certificateLongId) {
+        this.certificateLongId = certificateLongId;
     }
 
     public String getOriginName() {
@@ -94,7 +94,7 @@ public class DubboRestCertificateFileStreamUploadInfo implements Dto {
     public String toString() {
         return "DubboRestCertificateFileStreamUploadInfo{" +
                 "userStringId='" + userStringId + '\'' +
-                ", CertificateLongId=" + CertificateLongId +
+                ", certificateLongId=" + certificateLongId +
                 ", originName='" + originName + '\'' +
                 ", length=" + length +
                 ", content=" + content +

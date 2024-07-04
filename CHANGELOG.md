@@ -12,7 +12,9 @@
 
 #### 功能移除
 
-- (无)
+- 修正部分 Bean 中不规范的字段名。
+  - com.dwarfeng.familyhelper.plugin.clannad.bean.dto.DubboRestCertificateFileStreamUploadInfo。
+  - com.dwarfeng.familyhelper.plugin.clannad.bean.dto.DubboRestCertificateFileStreamDownloadInfo。
 
 ---
 
