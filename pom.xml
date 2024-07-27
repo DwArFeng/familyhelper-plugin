@@ -41,6 +41,7 @@
         <familyhelper-project.version>1.2.1.a</familyhelper-project.version>
         <familyhelper-assets.version>1.0.8.a</familyhelper-assets.version>
         <familyhelper-life.version>1.1.1.a</familyhelper-life.version>
+        <settingrepo.version>2.0.0.b</settingrepo.version>
         <!-- Maven 插件版本声明 -->
         <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
@@ -220,6 +221,22 @@
                 <artifactId>familyhelper-life-impl</artifactId>
                 <version>${familyhelper-life.version}</version>
             </dependency>
+            <!-- Settingrepo 组件 -->
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>settingrepo-stack</artifactId>
+                <version>${settingrepo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>settingrepo-sdk</artifactId>
+                <version>${settingrepo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>settingrepo-impl</artifactId>
+                <version>${settingrepo.version}</version>
+            </dependency>
             <!-- 程序自身组件 -->
             <dependency>
                 <groupId>com.dwarfeng</groupId>
@@ -294,5 +311,6 @@
         <module>familyhelper-plugin-project</module>
         <module>familyhelper-plugin-assets</module>
         <module>familyhelper-plugin-life</module>
+        <module>familyhelper-plugin-settingrepo</module>
     </modules>
 </project>
