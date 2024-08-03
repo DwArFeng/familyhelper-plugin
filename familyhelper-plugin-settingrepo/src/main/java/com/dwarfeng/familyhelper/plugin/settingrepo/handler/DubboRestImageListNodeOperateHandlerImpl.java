@@ -45,6 +45,7 @@ public class DubboRestImageListNodeOperateHandlerImpl implements DubboRestImageL
         this.voucherService = voucherService;
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public DubboRestImageListNodeFileStream downloadFileStream(
             DubboRestImageListNodeFileStreamDownloadInfo downloadInfo
@@ -92,6 +93,7 @@ public class DubboRestImageListNodeOperateHandlerImpl implements DubboRestImageL
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public DubboRestImageListNodeFileStream downloadFileStreamByVoucher(VoucherIdWrapper voucherIdWrapper)
             throws HandlerException {

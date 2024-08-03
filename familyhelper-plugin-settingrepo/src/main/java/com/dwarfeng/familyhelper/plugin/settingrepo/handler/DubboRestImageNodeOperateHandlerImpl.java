@@ -73,7 +73,6 @@ public class DubboRestImageNodeOperateHandlerImpl implements DubboRestImageNodeO
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     @Override
     public VoucherIdWrapper requestFileStreamVoucher(DubboRestImageNodeFileStreamDownloadInfo downloadInfo)
             throws HandlerException {
