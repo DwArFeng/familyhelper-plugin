@@ -4,6 +4,10 @@
 
 #### 功能构建
 
+- 依赖升级。
+  - 升级 `spring` 依赖版本为 `5.3.37` 以规避漏洞。
+  - 升级 `subgrade` 依赖版本为 `1.5.5.a` 以规避漏洞。
+
 - 实现 `familyhelper-setting` 模块的服务。
   - com.dwarfeng.familyhelper.plugin.settingrepo.service.DubboRestImageNodeOperateService。
   - com.dwarfeng.familyhelper.plugin.settingrepo.service.DubboRestImageListNodeOperateService。
