@@ -6,6 +6,7 @@
 
 - 实现 `familyhelper-setting` 模块的服务。
   - com.dwarfeng.familyhelper.plugin.settingrepo.service.DubboRestImageNodeOperateService。
+  - com.dwarfeng.familyhelper.plugin.settingrepo.service.DubboRestImageListNodeOperateService。
 
 #### Bug修复
 
