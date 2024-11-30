@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 实现 `familyhelper-clannad` 模块的服务。
+  - com.dwarfeng.familyhelper.plugin.clannad.service.DubboRestMessageAttachmentOperateService。
+
 - 依赖升级。
   - 升级 `familyhelper-clannad` 依赖版本为 `1.5.0.a` 以应用其新功能。
   - 升级 `spring` 依赖版本为 `5.3.39` 以规避漏洞。
