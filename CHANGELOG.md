@@ -10,7 +10,9 @@
 
 #### Bug修复
 
-- (无)
+- 修正 `familyhelper-clannad` 模块中部分实体注解的错误。
+  - com.dwarfeng.familyhelper.plugin.clannad.bean.dto.DubboRestCertificateFileStreamDownloadInfo。
+  - com.dwarfeng.familyhelper.plugin.clannad.bean.dto.DubboRestCertificateFileStreamUploadInfo。
 
 #### 功能移除
 

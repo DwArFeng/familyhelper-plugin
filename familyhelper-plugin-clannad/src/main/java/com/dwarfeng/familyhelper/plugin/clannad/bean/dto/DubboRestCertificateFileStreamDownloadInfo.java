@@ -20,7 +20,7 @@ public class DubboRestCertificateFileStreamDownloadInfo implements Dto {
     @PartType("text/plain;charset=utf-8")
     private String userStringId;
 
-    @FormParam("Certificate-file-long-id")
+    @FormParam("certificate-file-long-id")
     @PartType(MediaType.TEXT_PLAIN)
     private Long certificateFileLongId;
 
