@@ -42,6 +42,7 @@
         <familyhelper-assets.version>1.0.8.a</familyhelper-assets.version>
         <familyhelper-life.version>1.1.1.a</familyhelper-life.version>
         <settingrepo.version>2.0.0.b</settingrepo.version>
+        <acckeeper.version>1.7.1.a</acckeeper.version>
         <!-- Maven 插件版本声明 -->
         <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
@@ -236,6 +237,12 @@
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>settingrepo-impl</artifactId>
                 <version>${settingrepo.version}</version>
+            </dependency>
+            <!-- Acckeeper 组件 -->
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>account-keeper-stack</artifactId>
+                <version>${acckeeper.version}</version>
             </dependency>
             <!-- 程序自身组件 -->
             <dependency>
