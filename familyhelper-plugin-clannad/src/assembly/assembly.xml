@@ -27,6 +27,7 @@
                 <include>org.apache.james:*</include>
                 <include>commons-io:*</include>
                 <include>com.dwarfeng:voucher*</include>
+                <include>com.dwarfeng:account-keeper*</include>
             </includes>
         </dependencySet>
     </dependencySets>

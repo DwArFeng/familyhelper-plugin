@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 改进 `familyhelper-clannad` 模块的推送器。
+  - com.dwarfeng.familyhelper.plugin.clannad.handler.pusher.FamilyhelperPusher。
+
 - 优化 `notify` 模块的服务。
   - EmailSenderRegistry 发送邮件时，将连接方式优化为 SSL 连接。
 

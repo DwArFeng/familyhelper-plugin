@@ -68,6 +68,11 @@
             <groupId>com.dwarfeng</groupId>
             <artifactId>voucher-stack</artifactId>
         </dependency>
+        <!-- Acckeeper 组件 -->
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>account-keeper-stack</artifactId>
+        </dependency>
         <!-- 程序自身组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>

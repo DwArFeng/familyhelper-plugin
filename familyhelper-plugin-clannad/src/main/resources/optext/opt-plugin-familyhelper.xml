@@ -47,7 +47,6 @@
             check="false"
             group="${dubbo.consumer.notify.group}"
     />
-
     <dubbo:reference
             id="voucherService"
             interface="com.dwarfeng.voucher.stack.service.VoucherService"
@@ -55,5 +54,13 @@
             timeout="60000"
             check="false"
             group="${dubbo.consumer.voucher.group}"
+    />
+    <dubbo:reference
+            id="accountMaintainService"
+            interface="com.dwarfeng.acckeeper.stack.service.AccountMaintainService"
+            retries="3"
+            timeout="60000"
+            check="false"
+            group="${dubbo.consumer.acckeeper.group}"
     />
 </beans>
