@@ -206,6 +206,9 @@ public class EmailSenderRegistry extends AbstractSenderRegistry {
             Properties properties = new Properties();
             properties.put("mail.smtp.host", config.getSmtpHost());
             properties.put("mail.smtp.auth", config.isSmtpAuth());
+            properties.put("mail.smtp.socketFactory.port", "465");
+            properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+            properties.put("mail.smtp.socketFactory.fallback", "false");
 
             Authenticator authenticator = new Authenticator() {
                 @Override
