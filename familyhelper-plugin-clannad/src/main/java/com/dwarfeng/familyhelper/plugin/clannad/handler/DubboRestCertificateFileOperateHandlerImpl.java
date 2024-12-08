@@ -130,6 +130,7 @@ public class DubboRestCertificateFileOperateHandlerImpl implements DubboRestCert
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public DubboRestCertificateFileStream downloadCertificateFileStreamByVoucher(VoucherIdWrapper voucherIdWrapper)
             throws HandlerException {
