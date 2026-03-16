@@ -13,16 +13,16 @@
         http://dubbo.apache.org/schema/dubbo/dubbo.xsd"
 >
 
-    <!--扫描 router 的实现包。 -->
+    <!-- 扫描 router 的实现包。 -->
     <context:component-scan base-package="com.dwarfeng.familyhelper.plugin.notify.handler.router"/>
-    <!--扫描 dispatcher 的实现包。 -->
+    <!-- 扫描 dispatcher 的实现包。 -->
     <context:component-scan base-package="com.dwarfeng.familyhelper.plugin.notify.handler.dispatcher"/>
-    <!--扫描 sender 的实现包。 -->
+    <!-- 扫描 sender 的实现包。 -->
     <context:component-scan base-package="com.dwarfeng.familyhelper.plugin.notify.handler.sender"/>
-    <!--扫描 pusher 的实现包。 -->
+    <!-- 扫描 pusher 的实现包。 -->
     <context:component-scan base-package="com.dwarfeng.familyhelper.plugin.notify.handler.pusher"/>
 
-    <!-- 向注册中心注册暴露服务地址,注册消费者服务 -->
+    <!-- 向注册中心注册暴露服务地址，注册消费者服务。 -->
     <dubbo:reference
             id="userLookupService"
             interface="com.dwarfeng.rbacds.stack.service.UserLookupService"
@@ -56,7 +56,7 @@
             group="${dubbo.consumer.notify.group}"
     />
 
-    <!-- 注册表达式解析器以及对应的上下文 -->
+    <!-- 注册表达式解析器以及对应的上下文。 -->
     <bean class="org.springframework.expression.spel.standard.SpelExpressionParser"/>
     <bean class="org.springframework.expression.common.TemplateParserContext"/>
 </beans>
