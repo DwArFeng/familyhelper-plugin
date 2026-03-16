@@ -32,7 +32,7 @@
         <javax.ws.rs.version>2.1.1</javax.ws.rs.version>
         <resteasy.version>3.15.6.Final</resteasy.version>
         <fastjson.version>1.2.83</fastjson.version>
-        <subgrade.version>1.5.7.a</subgrade.version>
+        <subgrade.version>1.6.2.a</subgrade.version>
         <notify.version>1.4.0.a</notify.version>
         <rbac.version>1.5.0.a</rbac.version>
         <voucher.version>beta-1.0.0.a</voucher.version>
