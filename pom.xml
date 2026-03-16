@@ -41,7 +41,7 @@
         <familyhelper-project.version>1.2.1.a</familyhelper-project.version>
         <familyhelper-assets.version>1.0.8.a</familyhelper-assets.version>
         <familyhelper-life.version>1.1.1.a</familyhelper-life.version>
-        <settingrepo.version>2.0.0.b</settingrepo.version>
+        <settingrepo.version>2.4.6.a</settingrepo.version>
         <acckeeper.version>1.7.1.a</acckeeper.version>
         <!-- Maven 插件版本声明 -->
         <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
