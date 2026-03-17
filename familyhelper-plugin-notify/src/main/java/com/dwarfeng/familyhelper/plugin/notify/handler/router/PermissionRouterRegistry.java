@@ -65,9 +65,13 @@ public class PermissionRouterRegistry extends AbstractRouterRegistry {
     public static String stringifyExtraUserInfo(ExtraUserInfo extraUserInfo) {
         FastJsonExtraUserInfo fastJsonExtraUserInfo = new FastJsonExtraUserInfo(
                 extraUserInfo.isUseBlackList(),
-                extraUserInfo.getBlackList().stream().map(FastJsonStringIdKey::of).collect(Collectors.toList()),
+                Optional.ofNullable(extraUserInfo.getBlackList()).map(
+                        f -> f.stream().map(FastJsonStringIdKey::of).collect(Collectors.toList())
+                ).orElse(null),
                 extraUserInfo.isUseWhiteList(),
-                extraUserInfo.getWhiteList().stream().map(FastJsonStringIdKey::of).collect(Collectors.toList())
+                Optional.ofNullable(extraUserInfo.getWhiteList()).map(
+                        f -> f.stream().map(FastJsonStringIdKey::of).collect(Collectors.toList())
+                ).orElse(null)
         );
         return JSON.toJSONString(fastJsonExtraUserInfo, false);
     }
@@ -82,11 +86,13 @@ public class PermissionRouterRegistry extends AbstractRouterRegistry {
         FastJsonExtraUserInfo fastJsonExtraUserInfo = JSON.parseObject(string, FastJsonExtraUserInfo.class);
         return new ExtraUserInfo(
                 fastJsonExtraUserInfo.isUseBlackList(),
-                fastJsonExtraUserInfo.getBlackList().stream().map(FastJsonStringIdKey::toStackBean)
-                        .collect(Collectors.toList()),
+                Optional.ofNullable(fastJsonExtraUserInfo.getBlackList()).map(
+                        f -> f.stream().map(FastJsonStringIdKey::toStackBean).collect(Collectors.toList())
+                ).orElse(null),
                 fastJsonExtraUserInfo.isUseWhiteList(),
-                fastJsonExtraUserInfo.getWhiteList().stream().map(FastJsonStringIdKey::toStackBean)
-                        .collect(Collectors.toList())
+                Optional.ofNullable(fastJsonExtraUserInfo.getWhiteList()).map(
+                        f -> f.stream().map(FastJsonStringIdKey::toStackBean).collect(Collectors.toList())
+                ).orElse(null)
         );
     }
 

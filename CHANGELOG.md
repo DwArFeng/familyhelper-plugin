@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 优化部分代码，修复潜在的空指针异常。
+  - com.dwarfeng.familyhelper.plugin.notify.handler.router.PermissionRouterRegistry。
+
 - settingrepo 模块功能新增。
   - com.dwarfeng.familyhelper.plugin.settingrepo.service.DubboRestFileListNodeOperateService。
   - com.dwarfeng.familyhelper.plugin.settingrepo.service.DubboRestFileNodeOperateService。
