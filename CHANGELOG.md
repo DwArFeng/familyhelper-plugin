@@ -5,6 +5,7 @@
 ### 功能构建
 
 - settingrepo 模块功能新增。
+  - com.dwarfeng.familyhelper.plugin.settingrepo.service.DubboRestFileListNodeOperateService。
   - com.dwarfeng.familyhelper.plugin.settingrepo.service.DubboRestFileNodeOperateService。
 
 - 依赖升级。
