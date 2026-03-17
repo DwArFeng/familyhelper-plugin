@@ -1,6 +1,6 @@
 package com.dwarfeng.familyhelper.plugin.notify.handler.pusher;
 
-import com.dwarfeng.notify.impl.handler.pusher.AbstractPusher;
+import com.dwarfeng.notify.sdk.handler.pusher.PusherAdapter;
 import com.dwarfeng.notify.stack.bean.dto.NotifyHistoryRecordInfo;
 import com.dwarfeng.notify.stack.bean.dto.NotifyInfo;
 import com.dwarfeng.notify.stack.service.NotifyService;
@@ -22,7 +22,7 @@ import java.util.Map;
  * @since 1.0.0
  */
 @Component
-public class FamilyhelperPusher extends AbstractPusher {
+public class FamilyhelperPusher extends PusherAdapter {
 
     public static final String SUPPORT_TYPE = "familyhelper";
 
