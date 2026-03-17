@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- settingrepo 模块功能新增。
+  - com.dwarfeng.familyhelper.plugin.settingrepo.service.DubboRestFileNodeOperateService。
+
 - 依赖升级。
   - 升级 `settingrepo` 依赖版本为 `2.4.6.a` 以应用其新功能。
   - 升级 `subgrade` 依赖版本为 `1.6.2.a` 以规避漏洞。
