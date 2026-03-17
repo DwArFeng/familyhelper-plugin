@@ -17,10 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -76,8 +73,9 @@ public class FamilyhelperPusher extends PusherAdapter {
 
             // 构造 routerInfoMap。
             Map<String, String> routeInfoMap = new HashMap<>();
-            List<StringIdKey> identityUserList = pushInfo.getAimedUsers().stream().map(User::getKey)
-                    .collect(Collectors.toList());
+            List<StringIdKey> identityUserList = Optional.ofNullable(pushInfo.getAimedUsers()).map(
+                    f -> f.stream().map(User::getKey).collect(Collectors.toList())
+            ).orElse(Collections.emptyList());
             routeInfoMap.put(
                     identityRouterIdentityUserListKey,
                     IdentityRouterRegistry.stringifyIdentityUserList(identityUserList)

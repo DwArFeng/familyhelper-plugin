@@ -233,9 +233,10 @@ public class EmailSenderRegistry extends AbstractSenderRegistry {
             if (StringUtils.isEmpty(placeholderMapString)) {
                 subject = config.getSubjectTemplate();
                 text = config.getTextTemplate();
-                attachments = config.getAttachments().stream().map(
-                        a -> new Attachment(a.getNameTemplate(), a.getContentTemplate())
-                ).collect(Collectors.toList());
+                attachments = Optional.ofNullable(config.getAttachments()).map(
+                        f -> f.stream().map(a -> new Attachment(a.getNameTemplate(), a.getContentTemplate()))
+                                .collect(Collectors.toList())
+                ).orElse(Collections.emptyList());
             } else {
                 Map<String, Object> placeholderMap = parsePlaceholderMap(placeholderMapString);
                 subject = expressionParser.parseExpression(config.getSubjectTemplate(), parserContext)
