@@ -28,7 +28,11 @@
 
 ### Bug 修复
 
-- (无)
+- 修复部分配置文件中因冗余配置项造成的相关微服务配置失效问题。
+  - `familyhelper-plugin-assets` 子模块中的 confext/dubbo-familyhelper.properties。
+  - `familyhelper-plugin-clannad` 子模块中的 confext/dubbo-familyhelper.properties。
+  - `familyhelper-plugin-life` 子模块中的 confext/dubbo-familyhelper.properties。
+  - `familyhelper-plugin-settingrepo` 子模块中的 confext/dubbo-familyhelper.properties。
 
 ### 功能移除
 
