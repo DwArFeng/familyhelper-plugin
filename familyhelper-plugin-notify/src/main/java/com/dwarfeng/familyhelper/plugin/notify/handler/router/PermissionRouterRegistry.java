@@ -8,8 +8,11 @@ import com.dwarfeng.notify.stack.exception.RouterException;
 import com.dwarfeng.notify.stack.exception.RouterExecutionException;
 import com.dwarfeng.notify.stack.exception.RouterMakeException;
 import com.dwarfeng.notify.stack.handler.Router;
+import com.dwarfeng.rbacds.stack.bean.dto.UserViewOfPermissionInspectInfo;
+import com.dwarfeng.rbacds.stack.bean.dto.UserViewOfPermissionInspectResult;
 import com.dwarfeng.rbacds.stack.bean.entity.User;
-import com.dwarfeng.rbacds.stack.service.UserLookupService;
+import com.dwarfeng.rbacds.stack.bean.key.PermissionKey;
+import com.dwarfeng.rbacds.stack.service.InspectService;
 import com.dwarfeng.subgrade.sdk.bean.key.FastJsonStringIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
@@ -20,9 +23,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -98,15 +99,15 @@ public class PermissionRouterRegistry extends AbstractRouterRegistry {
 
     private final ApplicationContext ctx;
 
-    private final UserLookupService userLookupService;
+    private final InspectService inspectService;
 
     public PermissionRouterRegistry(
             ApplicationContext ctx,
-            @Qualifier("userLookupService") UserLookupService userLookupService
+            @Qualifier("inspectService") InspectService inspectService
     ) {
         super(ROUTER_TYPE);
         this.ctx = ctx;
-        this.userLookupService = userLookupService;
+        this.inspectService = inspectService;
     }
 
     @Override
@@ -121,7 +122,7 @@ public class PermissionRouterRegistry extends AbstractRouterRegistry {
 
     @Override
     public String provideExampleParam() {
-        Config config = new Config("your-permission-id-here", "your-extra-user-info-here");
+        Config config = new Config("your-scope-id-here", "your-permission-id-here", "your-extra-user-info-here");
         return JSON.toJSONString(config, false);
     }
 
@@ -132,7 +133,7 @@ public class PermissionRouterRegistry extends AbstractRouterRegistry {
             Config config = parseParam(param);
 
             // 通过 ctx 生成路由器。
-            return ctx.getBean(PermissionRouter.class, userLookupService, config);
+            return ctx.getBean(PermissionRouter.class, inspectService, config);
         } catch (Exception e) {
             throw new RouterMakeException(e, type, param);
         }
@@ -149,12 +150,12 @@ public class PermissionRouterRegistry extends AbstractRouterRegistry {
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public static class PermissionRouter extends AbstractRouter {
 
-        private final UserLookupService userLookupService;
+        private final InspectService inspectService;
 
         private final Config config;
 
-        public PermissionRouter(UserLookupService userLookupService, Config config) {
-            this.userLookupService = userLookupService;
+        public PermissionRouter(InspectService inspectService, Config config) {
+            this.inspectService = inspectService;
             this.config = config;
         }
 
@@ -162,11 +163,20 @@ public class PermissionRouterRegistry extends AbstractRouterRegistry {
         public List<StringIdKey> route(ContextInfo contextInfo, Map<String, String> routeInfoMap) throws RouterException {
             try {
                 // 获取权限节点主键。
-                StringIdKey permissionKey = new StringIdKey(config.getPermissionId());
+                PermissionKey permissionKey = new PermissionKey(
+                        config.getScopeStringId(), config.getPermissionStringId()
+                );
 
                 // 初步获取具有权限的所有用户，该步骤可以保证返回的所有用户均符合路由器的返回要求。
-                List<StringIdKey> userKeys = userLookupService.lookupForPermission(permissionKey).stream()
-                        .map(User::getKey).collect(Collectors.toList());
+                UserViewOfPermissionInspectResult inspectResult = inspectService.inspectUserViewOfPermission(
+                        new UserViewOfPermissionInspectInfo(permissionKey, null, null, null, false)
+                );
+                List<StringIdKey> userKeys;
+                if (Objects.isNull(inspectResult)) {
+                    userKeys = new ArrayList<>();
+                } else {
+                    userKeys = inspectResult.getMatchedUsers().stream().map(User::getKey).collect(Collectors.toList());
+                }
 
                 // 获取额外用户信息的字符串形式。
                 String extraUserInfoString = Optional.ofNullable(routeInfoMap)
@@ -202,26 +212,38 @@ public class PermissionRouterRegistry extends AbstractRouterRegistry {
 
         private static final long serialVersionUID = 6100979168538870041L;
 
-        @JSONField(name = "permission_id", ordinal = 1)
-        private String permissionId;
+        @JSONField(name = "scope_string_id", ordinal = 1)
+        private String scopeStringId;
 
-        @JSONField(name = "extra_user_info_key", ordinal = 2)
+        @JSONField(name = "permission_string_id", ordinal = 2)
+        private String permissionStringId;
+
+        @JSONField(name = "extra_user_info_key", ordinal = 3)
         private String extraUserInfoKey;
 
         public Config() {
         }
 
-        public Config(String permissionId, String extraUserInfoKey) {
-            this.permissionId = permissionId;
+        public Config(String scopeStringId, String permissionStringId, String extraUserInfoKey) {
+            this.scopeStringId = scopeStringId;
+            this.permissionStringId = permissionStringId;
             this.extraUserInfoKey = extraUserInfoKey;
         }
 
-        public String getPermissionId() {
-            return permissionId;
+        public String getScopeStringId() {
+            return scopeStringId;
         }
 
-        public void setPermissionId(String permissionId) {
-            this.permissionId = permissionId;
+        public void setScopeStringId(String scopeStringId) {
+            this.scopeStringId = scopeStringId;
+        }
+
+        public String getPermissionStringId() {
+            return permissionStringId;
+        }
+
+        public void setPermissionStringId(String permissionStringId) {
+            this.permissionStringId = permissionStringId;
         }
 
         public String getExtraUserInfoKey() {
@@ -235,7 +257,8 @@ public class PermissionRouterRegistry extends AbstractRouterRegistry {
         @Override
         public String toString() {
             return "Config{" +
-                    "permissionId='" + permissionId + '\'' +
+                    "scopeStringId='" + scopeStringId + '\'' +
+                    ", permissionStringId='" + permissionStringId + '\'' +
                     ", extraUserInfoKey='" + extraUserInfoKey + '\'' +
                     '}';
         }
