@@ -43,6 +43,7 @@
         <familyhelper-life.version>1.1.1.a</familyhelper-life.version>
         <settingrepo.version>3.0.1.a</settingrepo.version>
         <acckeeper.version>3.0.1.a</acckeeper.version>
+        <fileio.version>1.0.1.a</fileio.version>
         <!-- Maven 插件版本声明 -->
         <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
@@ -237,6 +238,22 @@
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>settingrepo-impl</artifactId>
                 <version>${settingrepo.version}</version>
+            </dependency>
+            <!-- Fileio 组件 -->
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>fileio-stack</artifactId>
+                <version>${fileio.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>fileio-sdk</artifactId>
+                <version>${fileio.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>fileio-impl</artifactId>
+                <version>${fileio.version}</version>
             </dependency>
             <!-- Acckeeper 组件 -->
             <dependency>
