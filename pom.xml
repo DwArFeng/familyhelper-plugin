@@ -336,5 +336,6 @@
         <module>familyhelper-plugin-assets</module>
         <module>familyhelper-plugin-life</module>
         <module>familyhelper-plugin-settingrepo</module>
+        <module>familyhelper-plugin-fileio</module>
     </modules>
 </project>

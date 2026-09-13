@@ -4,6 +4,12 @@
 
 ### 功能构建
 
+- 实现 `fileio` 模块的服务。
+  - com.dwarfeng.familyhelper.plugin.fileio.service.DubboRestExportFileOperateService。
+  - com.dwarfeng.familyhelper.plugin.fileio.service.DubboRestImportFileOperateService。
+  - com.dwarfeng.familyhelper.plugin.fileio.service.DubboRestExportTemplateOperateService。
+  - com.dwarfeng.familyhelper.plugin.fileio.service.DubboRestImportTemplateOperateService。
+
 - 增加依赖。
   - 增加依赖 `fileio` 以应用其新功能，版本为 `1.0.1.a`。
 

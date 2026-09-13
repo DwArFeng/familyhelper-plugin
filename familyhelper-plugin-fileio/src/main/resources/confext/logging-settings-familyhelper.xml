@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Loggers>
+        <!--################################### Apache http client wire logger ####################################-->
+        <Logger name="org.apache.http.wire" level="INFO" additivity="false">
+            <appender-ref ref="sync.console"/>
+            <appender-ref ref="sync.debug.rolling_file"/>
+            <appender-ref ref="sync.info.rolling_file"/>
+            <appender-ref ref="sync.warn.rolling_file"/>
+            <appender-ref ref="sync.error.rolling_file"/>
+        </Logger>
+    </Loggers>
+</Configuration>
