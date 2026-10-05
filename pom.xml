@@ -44,6 +44,7 @@
         <settingrepo.version>3.0.1.a</settingrepo.version>
         <acckeeper.version>3.0.1.a</acckeeper.version>
         <fileio.version>1.0.1.a</fileio.version>
+        <audit.version>1.3.0.a</audit.version>
         <!-- Maven 插件版本声明 -->
         <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
@@ -255,6 +256,22 @@
                 <artifactId>fileio-impl</artifactId>
                 <version>${fileio.version}</version>
             </dependency>
+            <!-- Audit 组件 -->
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>audit-stack</artifactId>
+                <version>${audit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>audit-sdk</artifactId>
+                <version>${audit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>audit-impl</artifactId>
+                <version>${audit.version}</version>
+            </dependency>
             <!-- Acckeeper 组件 -->
             <dependency>
                 <groupId>com.dwarfeng</groupId>
@@ -337,5 +354,6 @@
         <module>familyhelper-plugin-life</module>
         <module>familyhelper-plugin-settingrepo</module>
         <module>familyhelper-plugin-fileio</module>
+        <module>familyhelper-plugin-audit</module>
     </modules>
 </project>
