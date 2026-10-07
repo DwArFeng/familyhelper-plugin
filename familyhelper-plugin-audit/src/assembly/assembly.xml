@@ -17,6 +17,7 @@
             <fileMode>0755</fileMode>
             <includes>
                 <include>com.dwarfeng:familyhelper-plugin*</include>
+                <include>com.dwarfeng:notify*</include>
             </includes>
         </dependencySet>
     </dependencySets>

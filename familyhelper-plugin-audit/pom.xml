@@ -70,6 +70,15 @@
             <groupId>com.dwarfeng</groupId>
             <artifactId>audit-impl</artifactId>
         </dependency>
+        <!-- Notify 组件 -->
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>notify-stack</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>notify-sdk</artifactId>
+        </dependency>
         <!-- 程序自身组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
