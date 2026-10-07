@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- 实现 `audit` 模块的审计器。
+  - com.dwarfeng.familyhelper.plugin.audit.handler.inspector.acctloginfail.AccountLoginFailureInspector。
+  - com.dwarfeng.familyhelper.plugin.audit.handler.inspector.opburst.OperationBurstInspector。
+  - com.dwarfeng.familyhelper.plugin.audit.handler.inspector.sensop.SensitiveOperationInspector。
+
 - 增加依赖。
   - 增加依赖 `audit` 以应用其新功能，版本为 `1.3.0.a`。
 
